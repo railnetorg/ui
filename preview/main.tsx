@@ -387,6 +387,9 @@ function TokensCard() {
           <p className="text-label">Label · Inter Tight</p>
         </div>
         <p className="text-muted-foreground text-xs">Base Maia · Hugeicons · radius 0</p>
+        <p className="text-muted-foreground text-xs">
+          ABC Marist is licensed and not served by the public preview, where figures fall back to Georgia.
+        </p>
       </CardContent>
     </Card>
   );

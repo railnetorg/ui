@@ -72,4 +72,5 @@ Each release is announced in Slack with what changed.
 - A brand value changes in `tokens.css` only. Run `bun run build:registry`, which regenerates `registry.json` and `theme.css` (CI fails when they are out of date).
 - Add a component with `bunx shadcn add <name>` (writes to `registry/components/ui/`), then `bun run build:registry`.
 - `bun run dev` opens the preview; `bun run lint` and `bun run typecheck` before a PR.
+- To see ABC Marist in the preview, copy the licensed file to `preview/public/fonts/ABCMarist-Regular.otf` (git-ignored, never published).
 - This repo is public: nothing client-specific, no internal URL, no partner name. Product components stay in their apps.
