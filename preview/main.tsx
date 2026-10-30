@@ -90,11 +90,6 @@ const BRAND_COLORS = [
 const SEMANTIC_COLORS = ['primary', 'secondary', 'muted', 'accent', 'destructive', 'border'];
 
 const CHART_COLORS = ['chart-1', 'chart-2', 'chart-3', 'chart-4', 'chart-5'];
-const FIXED_SETTINGS = [
-  { label: 'Style', value: 'Base Maia' },
-  { label: 'Icons', value: 'Hugeicons' },
-  { label: 'Radius', value: '0' },
-];
 const RULES = [
   'A brand value changes in tokens.css only, through a PR on this repo.',
   'Install the theme with shadcn add; never retype its values.',
@@ -103,23 +98,9 @@ const RULES = [
   'Nothing client-specific or internal in this public repo.',
 ];
 
-type SettingRowProps = { label: string; value: string; children?: React.ReactNode };
+type HeaderProps = { dark: boolean; onToggleDark: () => void };
 
-function SettingRow({ label, value, children }: SettingRowProps) {
-  return (
-    <div className="flex items-center justify-between gap-3 border-b px-4 py-3">
-      <div className="min-w-0">
-        <p className="text-[11px] text-muted-foreground">{label}</p>
-        <p className="truncate font-medium text-sm">{value}</p>
-      </div>
-      {children}
-    </div>
-  );
-}
-
-type SidebarProps = { dark: boolean; onToggleDark: () => void };
-
-function Sidebar({ dark, onToggleDark }: SidebarProps) {
+function Header({ dark, onToggleDark }: HeaderProps) {
   const [copied, setCopied] = useState(false);
 
   async function copyInstallCommand() {
@@ -128,58 +109,47 @@ function Sidebar({ dark, onToggleDark }: SidebarProps) {
   }
 
   return (
-    <aside className="dark flex flex-col border bg-background text-foreground lg:sticky lg:top-4 lg:h-[calc(100vh-2rem)] lg:w-64 lg:shrink-0">
-      <div className="flex items-center justify-between border-b px-4 py-4">
-        <div>
-          <p className="font-serif text-xl">Railnet UI</p>
-          <p className="text-[11px] text-muted-foreground">{VERSION}</p>
-        </div>
-        <Button variant="secondary" size="icon" aria-label="Toggle dark mode" onClick={onToggleDark}>
+    <header className="flex items-center justify-between gap-4 border-b px-4 py-3">
+      <div className="flex items-baseline gap-2">
+        <p className="whitespace-nowrap font-heading text-2xl">Railnet UI</p>
+        <p className="text-muted-foreground text-xs">{VERSION}</p>
+      </div>
+      <div className="flex items-center gap-2">
+        <code className="hidden bg-muted px-2 py-1.5 text-muted-foreground text-xs md:block">{INSTALL_COMMAND}</code>
+        <Button variant="outline" onClick={copyInstallCommand}>
+          <HugeiconsIcon icon={copied ? Tick02Icon : Copy01Icon} />
+          {copied ? (
+            'Copied'
+          ) : (
+            <>
+              <span className="sm:hidden">Install</span>
+              <span className="hidden sm:inline">Copy install command</span>
+            </>
+          )}
+        </Button>
+        <Button variant="outline" size="icon" aria-label="Toggle dark mode" onClick={onToggleDark}>
           <HugeiconsIcon icon={dark ? Sun03Icon : Moon02Icon} />
         </Button>
       </div>
+    </header>
+  );
+}
 
-      <div className="lg:flex-1 lg:overflow-y-auto">
-        <div className="grid grid-cols-2 lg:grid-cols-1">
-          <SettingRow label="Primary" value="Deep red">
-            <span className="size-3 shrink-0 bg-deep-red" />
-          </SettingRow>
-          <SettingRow label="Chart colors" value="Ember">
-            <span className="flex shrink-0">
-              {CHART_COLORS.map((color) => (
-                <span key={color} className="size-3" style={{ background: `var(--${color})` }} />
-              ))}
-            </span>
-          </SettingRow>
-          <SettingRow label="Heading" value="ABC Marist">
-            <span className="font-serif text-lg">Aa</span>
-          </SettingRow>
-          <SettingRow label="Font" value="Inter Tight">
-            <span className="text-lg">Aa</span>
-          </SettingRow>
-          {FIXED_SETTINGS.map((setting) => (
-            <SettingRow key={setting.label} label={setting.label} value={setting.value} />
+function RulesCard() {
+  return (
+    <Card size="sm">
+      <CardHeader>
+        <CardTitle>Rules</CardTitle>
+        <CardDescription>How every Railnet app uses this design system.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ol className="list-decimal space-y-2 pl-4 text-sm">
+          {RULES.map((rule) => (
+            <li key={rule}>{rule}</li>
           ))}
-        </div>
-
-        <div className="space-y-2 px-4 py-4">
-          <p className="text-section-label">Rules</p>
-          <ol className="list-decimal space-y-1.5 pl-4 text-muted-foreground text-xs">
-            {RULES.map((rule) => (
-              <li key={rule}>{rule}</li>
-            ))}
-          </ol>
-        </div>
-      </div>
-
-      <div className="space-y-2 border-t p-4">
-        <code className="block break-all bg-muted p-2 text-[11px] text-muted-foreground">{INSTALL_COMMAND}</code>
-        <Button className="w-full" onClick={copyInstallCommand}>
-          <HugeiconsIcon icon={copied ? Tick02Icon : Copy01Icon} />
-          {copied ? 'Copied' : 'Copy install command'}
-        </Button>
-      </div>
-    </aside>
+        </ol>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -409,12 +379,14 @@ function TokensCard() {
       <CardContent className="space-y-4">
         <Swatches title="Semantic" colors={SEMANTIC_COLORS} />
         <Swatches title="Brand" colors={BRAND_COLORS} />
+        <Swatches title="Charts" colors={CHART_COLORS} />
         <div className="space-y-1">
           <p className="text-section-label">Typography</p>
           <p className="text-4xl text-stat">$12,431,902</p>
           <p className="font-heading text-xl">Programmable yield for DeFi</p>
           <p className="text-label">Label · Inter Tight</p>
         </div>
+        <p className="text-muted-foreground text-xs">Base Maia · Hugeicons · radius 0</p>
       </CardContent>
     </Card>
   );
@@ -425,12 +397,13 @@ function Preview() {
 
   return (
     <div className={dark ? 'dark' : undefined}>
-      <div className="flex min-h-screen flex-col gap-4 bg-background p-4 text-foreground lg:flex-row lg:items-start">
-        <Sidebar dark={dark} onToggleDark={() => setDark(!dark)} />
-        <main className="flex-1 columns-1 gap-4 md:columns-2 2xl:columns-3 [&>*]:mb-4 [&>*]:break-inside-avoid">
+      <div className="min-h-screen bg-background text-foreground">
+        <Header dark={dark} onToggleDark={() => setDark(!dark)} />
+        <main className="columns-1 gap-4 p-4 md:columns-2 xl:columns-3 [&>*]:mb-4 [&>*]:break-inside-avoid">
           <PerformanceCard />
           <DepositCard />
           <TokensCard />
+          <RulesCard />
           <PositionsCard />
           <RewardsCard />
           <EmptyCard />
