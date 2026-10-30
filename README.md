@@ -4,7 +4,7 @@ Railnet's brand tokens and a [shadcn registry](https://ui.shadcn.com/docs/regist
 
 - **Tokens are shared.** Colors (light and dark), fonts, radius and typography utilities come from `tokens.css`, the only place a brand value is written.
 - **Components are yours.** `shadcn add` copies a component into your app once; from then on your team owns it and changes it freely.
-- **Browse** the components in light and dark: https://railnetorg.github.io/ui/
+- **Browse** the components in light and dark: https://external.railnet.app/ui/
 
 ## Install
 
