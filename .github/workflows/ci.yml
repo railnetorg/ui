@@ -1,0 +1,65 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+      - run: bun install --frozen-lockfile
+      - run: bun run lint
+      - run: bun run typecheck
+      - name: Registry matches tokens.css
+        run: bun run build:registry && git diff --exit-code registry.json theme.css
+      - run: bun run build
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: preview/dist
+
+  consumer:
+    name: Install into a fresh shadcn app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+      - run: bun install --frozen-lockfile
+      - run: node_modules/.bin/shadcn build -o .fixture/r
+      - name: Scaffold
+        working-directory: .fixture
+        run: ../node_modules/.bin/shadcn init -t vite -b base -p maia -n app --no-monorepo -y
+      - name: Add the theme and components
+        working-directory: .fixture/app
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ../../node_modules/.bin/shadcn add ../r/railnet-theme.json ../r/badge.json ../r/dialog.json -y -o
+          grep -q -- '--deep-red: #500000' src/index.css
+          printf "import { Badge } from '@/components/ui/badge'\nimport { Dialog } from '@/components/ui/dialog'\n\nexport default function App() {\n  return <Dialog><Badge variant=\"brand\">brand</Badge></Dialog>\n}\n" > src/App.tsx
+          bun run build
+
+  deploy:
+    name: Deploy preview
+    if: github.event_name == 'push'
+    needs: [verify, consumer]
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

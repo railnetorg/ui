@@ -1,0 +1,933 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "railnet",
+  "homepage": "https://github.com/railnetorg/ui",
+  "items": [
+    {
+      "name": "railnet-theme",
+      "type": "registry:theme",
+      "title": "Railnet theme",
+      "description": "Railnet brand tokens (light and dark), fonts, radius and typography utilities.",
+      "docs": "ABC Marist is licensed: serve /fonts/ABCMarist-Regular.otf from your app. Load Inter Tight from Google Fonts or self-host it.",
+      "cssVars": {
+        "theme": {
+          "color-background": "var(--background)",
+          "color-foreground": "var(--foreground)",
+          "color-primary": "var(--primary)",
+          "color-primary-foreground": "var(--primary-foreground)",
+          "color-secondary": "var(--secondary)",
+          "color-secondary-foreground": "var(--secondary-foreground)",
+          "color-muted": "var(--muted)",
+          "color-muted-foreground": "var(--muted-foreground)",
+          "color-accent": "var(--accent)",
+          "color-accent-foreground": "var(--accent-foreground)",
+          "color-destructive": "var(--destructive)",
+          "color-destructive-foreground": "var(--destructive-foreground)",
+          "color-primary-hover": "var(--primary-hover)",
+          "color-secondary-hover": "var(--secondary-hover)",
+          "color-destructive-hover": "var(--destructive-hover)",
+          "color-border": "var(--border)",
+          "color-input": "var(--input)",
+          "color-ring": "var(--ring)",
+          "color-card": "var(--card)",
+          "color-card-foreground": "var(--card-foreground)",
+          "color-popover": "var(--popover)",
+          "color-popover-foreground": "var(--popover-foreground)",
+          "color-chart-1": "var(--chart-1)",
+          "color-chart-2": "var(--chart-2)",
+          "color-chart-3": "var(--chart-3)",
+          "color-chart-4": "var(--chart-4)",
+          "color-chart-5": "var(--chart-5)",
+          "color-sidebar": "var(--sidebar)",
+          "color-sidebar-foreground": "var(--sidebar-foreground)",
+          "color-sidebar-primary": "var(--sidebar-primary)",
+          "color-sidebar-primary-foreground": "var(--sidebar-primary-foreground)",
+          "color-sidebar-accent": "var(--sidebar-accent)",
+          "color-sidebar-accent-foreground": "var(--sidebar-accent-foreground)",
+          "color-sidebar-border": "var(--sidebar-border)",
+          "color-sidebar-ring": "var(--sidebar-ring)",
+          "color-deep-red": "var(--deep-red)",
+          "color-deep-red-dark": "var(--deep-red-dark)",
+          "color-soft-black": "var(--soft-black)",
+          "color-bone": "var(--bone)",
+          "color-peach": "var(--peach)",
+          "color-coral": "var(--coral)",
+          "color-ember": "var(--ember)",
+          "color-blaze": "var(--blaze)",
+          "color-rust": "var(--rust)",
+          "color-spruce": "var(--spruce)",
+          "color-sage": "var(--sage)",
+          "color-mint": "var(--mint)",
+          "color-petrol": "var(--petrol)",
+          "color-glacier": "var(--glacier)",
+          "color-aqua": "var(--aqua)",
+          "color-gray-25": "var(--gray-25)",
+          "color-gray-50": "var(--gray-50)",
+          "color-gray-100": "var(--gray-100)",
+          "color-gray-200": "var(--gray-200)",
+          "color-gray-300": "var(--gray-300)",
+          "color-gray-400": "var(--gray-400)",
+          "color-gray-500": "var(--gray-500)",
+          "color-primary-25": "var(--primary-25)",
+          "color-primary-50": "var(--primary-50)",
+          "color-primary-100": "var(--primary-100)",
+          "color-primary-200": "var(--primary-200)",
+          "color-primary-300": "var(--primary-300)",
+          "color-primary-400": "var(--primary-400)",
+          "color-primary-500": "var(--primary-500)",
+          "font-serif": "\"ABC Marist\", \"Georgia\", serif",
+          "font-sans": "\"Inter Tight\", \"Inter\", system-ui, sans-serif",
+          "radius-xs": "0",
+          "radius-sm": "0",
+          "radius-md": "0",
+          "radius-lg": "0",
+          "radius-xl": "0",
+          "radius-2xl": "0",
+          "radius-3xl": "0",
+          "radius-4xl": "0"
+        },
+        "light": {
+          "radius": "0",
+          "background": "#ffffff",
+          "foreground": "#202124",
+          "primary": "#500000",
+          "primary-foreground": "#ffffff",
+          "secondary": "#202124",
+          "secondary-foreground": "#ffffff",
+          "muted": "#f0f0f0",
+          "muted-foreground": "#787878",
+          "accent": "#f0f0f0",
+          "accent-foreground": "#202124",
+          "destructive": "#cc3f00",
+          "destructive-foreground": "#ffffff",
+          "primary-hover": "#6b0000",
+          "secondary-hover": "#3a3a3a",
+          "destructive-hover": "#a33200",
+          "border": "#f0f0f0",
+          "input": "#f7f7f7",
+          "ring": "#500000",
+          "card": "#ffffff",
+          "card-foreground": "#202124",
+          "popover": "#ffffff",
+          "popover-foreground": "#202124",
+          "chart-1": "#fd5100",
+          "chart-2": "#ff9465",
+          "chart-3": "#ffbea2",
+          "chart-4": "#f8ebe5",
+          "chart-5": "#cc3f00",
+          "sidebar": "#ffffff",
+          "sidebar-foreground": "#202124",
+          "sidebar-primary": "#500000",
+          "sidebar-primary-foreground": "#ffffff",
+          "sidebar-accent": "#f0f0f0",
+          "sidebar-accent-foreground": "#202124",
+          "sidebar-border": "#dadada",
+          "sidebar-ring": "#500000",
+          "deep-red": "#500000",
+          "deep-red-dark": "#3a0000",
+          "soft-black": "#202124",
+          "bone": "#f8ebe5",
+          "peach": "#ffbea2",
+          "coral": "#ff9465",
+          "ember": "#ff9059",
+          "blaze": "#fd5100",
+          "rust": "#cc3f00",
+          "spruce": "#2d4b44",
+          "sage": "#458778",
+          "mint": "#00cd9e",
+          "petrol": "#007d82",
+          "glacier": "#20b9bf",
+          "aqua": "#a8dadc",
+          "gray-25": "#f9fafb",
+          "gray-50": "#f0f0f0",
+          "gray-100": "#dadada",
+          "gray-200": "#a7a8a8",
+          "gray-300": "#787878",
+          "gray-400": "#626262",
+          "gray-500": "#3a3a3a",
+          "primary-25": "#e5d9d9",
+          "primary-50": "#dccccc",
+          "primary-100": "#cbb3b3",
+          "primary-200": "#b08c8c",
+          "primary-300": "#966666",
+          "primary-400": "#733333",
+          "primary-500": "#500000"
+        },
+        "dark": {
+          "background": "#0e0f11",
+          "foreground": "#e8e9ec",
+          "primary": "#ffffff",
+          "primary-foreground": "#0e0f11",
+          "secondary": "#1c1d20",
+          "secondary-foreground": "#e8e9ec",
+          "muted": "#171819",
+          "muted-foreground": "#6b6c72",
+          "accent": "#1a1b1e",
+          "accent-foreground": "#e8e9ec",
+          "destructive": "#cc3f00",
+          "destructive-foreground": "#ffffff",
+          "primary-hover": "#d0d0d0",
+          "secondary-hover": "#232428",
+          "destructive-hover": "#e04800",
+          "border": "#222428",
+          "input": "#1a1b1e",
+          "ring": "#ffffff",
+          "card": "#0e0f11",
+          "card-foreground": "#e8e9ec",
+          "popover": "#141618",
+          "popover-foreground": "#e8e9ec",
+          "chart-1": "#ff9465",
+          "chart-2": "#fd5100",
+          "chart-3": "#ffbea2",
+          "chart-4": "#cc3f00",
+          "chart-5": "#f8ebe5",
+          "sidebar": "#0e0f11",
+          "sidebar-foreground": "#e8e9ec",
+          "sidebar-primary": "#ff9465",
+          "sidebar-primary-foreground": "#0e0f11",
+          "sidebar-accent": "#1a1b1e",
+          "sidebar-accent-foreground": "#e8e9ec",
+          "sidebar-border": "#222428",
+          "sidebar-ring": "#ff9465"
+        }
+      },
+      "css": {
+        "@layer base": {
+          "[data-slot=\"avatar\"], .rounded-full": {
+            "border-radius": "9999px"
+          }
+        },
+        "@utility text-stat": {
+          "font-family": "var(--font-serif)",
+          "font-weight": "400",
+          "letter-spacing": "-0.03em",
+          "line-height": "1"
+        },
+        "@utility text-body-lg": {
+          "font-family": "var(--font-serif)",
+          "font-weight": "400",
+          "letter-spacing": "-0.01em",
+          "line-height": "1.1"
+        },
+        "@utility text-label": {
+          "font-family": "var(--font-sans)",
+          "font-weight": "600",
+          "font-size": "13px",
+          "letter-spacing": "0.01em",
+          "line-height": "1.2"
+        },
+        "@utility text-section-label": {
+          "font-family": "var(--font-sans)",
+          "font-size": "11px",
+          "font-weight": "600",
+          "text-transform": "uppercase",
+          "letter-spacing": "0.06em",
+          "line-height": "1.2",
+          "color": "var(--gray-300)"
+        },
+        "@utility text-uppercase": {
+          "text-transform": "uppercase",
+          "letter-spacing": "0.06em"
+        }
+      }
+    },
+    {
+      "name": "railnet-logo",
+      "type": "registry:file",
+      "title": "Railnet logo",
+      "files": [
+        {
+          "path": "registry/assets/railnet-logo-light.svg",
+          "type": "registry:file",
+          "target": "~/public/railnet-logo-light.svg"
+        },
+        {
+          "path": "registry/assets/railnet-logo-dark.svg",
+          "type": "registry:file",
+          "target": "~/public/railnet-logo-dark.svg"
+        }
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["railnetorg/ui/button", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/alert-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/alert.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "registry:ui",
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/aspect-ratio.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button-group",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["railnetorg/ui/separator", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/button-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "dependencies": ["@hugeicons/core-free-icons", "@hugeicons/react", "react-day-picker"],
+      "registryDependencies": ["railnetorg/ui/button", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/calendar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "dependencies": ["@hugeicons/core-free-icons", "@hugeicons/react", "embla-carousel-react"],
+      "registryDependencies": ["railnetorg/ui/button", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/carousel.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "dependencies": ["recharts"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/components/ui/collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["railnetorg/ui/button", "railnetorg/ui/checkbox", "railnetorg/ui/input-group", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "dependencies": ["@hugeicons/core-free-icons", "@hugeicons/react", "cmdk"],
+      "registryDependencies": ["railnetorg/ui/dialog", "railnetorg/ui/input-group", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/command.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["railnetorg/ui/button", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "direction",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/components/ui/direction.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "dependencies": ["vaul"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/empty.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["railnetorg/ui/label", "railnetorg/ui/separator", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/hover-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["railnetorg/ui/button", "railnetorg/ui/input", "railnetorg/ui/textarea", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/input-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "dependencies": ["@hugeicons/core-free-icons", "@hugeicons/react", "input-otp"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/input-otp.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "item",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["railnetorg/ui/separator", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/item.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/kbd.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/label.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "menubar",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["railnetorg/ui/dropdown-menu", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/menubar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "multi-select-filter",
+      "type": "registry:ui",
+      "dependencies": ["@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["railnetorg/ui/combobox", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/multi-select-filter.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "native-select",
+      "type": "registry:ui",
+      "dependencies": ["@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/native-select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@hugeicons/core-free-icons", "@hugeicons/react", "class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/navigation-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "dependencies": ["@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["railnetorg/ui/button", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/pagination.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/popover.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/radio-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "dependencies": ["react-resizable-panels"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/resizable.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["railnetorg/ui/button", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/sheet.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "@hugeicons/core-free-icons", "@hugeicons/react", "class-variance-authority"],
+      "registryDependencies": [
+        "railnetorg/ui/button",
+        "railnetorg/ui/input",
+        "railnetorg/ui/separator",
+        "railnetorg/ui/sheet",
+        "railnetorg/ui/skeleton",
+        "railnetorg/ui/tooltip",
+        "use-mobile",
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "registry/components/ui/sidebar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/slider.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sonner",
+      "type": "registry:ui",
+      "dependencies": ["@hugeicons/core-free-icons", "@hugeicons/react", "sonner"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/components/ui/sonner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "dependencies": ["@hugeicons/core-free-icons", "@hugeicons/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["railnetorg/ui/toggle", "utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/toggle-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/components/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}
