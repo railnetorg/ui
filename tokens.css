@@ -68,6 +68,7 @@
 
   --font-serif: "ABC Marist", "Georgia", serif;
   --font-sans: "Inter Tight", "Inter", system-ui, sans-serif;
+  --font-heading: var(--font-serif);
 }
 
 .dark {

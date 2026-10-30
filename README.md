@@ -8,13 +8,13 @@ Railnet's brand tokens and a [shadcn registry](https://ui.shadcn.com/docs/regist
 
 ## Install
 
-Pin a release tag (`#v0.1.0`) so every app knows which brand version it carries.
+Pin a release tag (`#v0.2.0`) so every app knows which brand version it carries.
 
 ### React + shadcn
 
 ```bash
-bunx shadcn@latest add railnetorg/ui/railnet-theme#v0.1.0
-bunx shadcn@latest add railnetorg/ui/button#v0.1.0 railnetorg/ui/dialog#v0.1.0
+bunx shadcn@latest add railnetorg/ui/railnet-theme#v0.2.0
+bunx shadcn@latest add railnetorg/ui/button#v0.2.0 railnetorg/ui/dialog#v0.2.0
 ```
 
 The theme writes the tokens into your CSS file (`:root`, `.dark`, `@theme inline`) and adds the typography utilities (`text-stat`, `text-label`, `text-section-label`, `text-body-lg`, `text-uppercase`). A component's own dependencies on other Railnet components resolve from `main`.
@@ -31,12 +31,14 @@ Copy `tokens.css` and `theme.css` from the tag into your app and import both:
 @import "./theme.css";
 ```
 
+To use the registry components there too, run `bunx shadcn@latest init` first: they need `tw-animate-css` and `shadcn/tailwind.css` (animations and `data-*` variants), which init installs and imports.
+
 ### Plain CSS (static pages, Astro without Tailwind, React 18 decks)
 
 Copy `tokens.css` from the tag and use the variables (`var(--primary)`, `var(--font-sans)`…). To refresh it:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/railnetorg/ui/v0.1.0/tokens.css -o tokens.css
+curl -fsSL https://raw.githubusercontent.com/railnetorg/ui/v0.2.0/tokens.css -o tokens.css
 ```
 
 ### Mintlify

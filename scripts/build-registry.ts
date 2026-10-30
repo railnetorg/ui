@@ -7,7 +7,11 @@ const PEER_PACKAGES = new Set(['react', 'react-dom']);
 
 type CssTree = { [selector: string]: string | CssTree };
 
-const FONT_FACE: CssTree = {
+const THEME_CSS_ONLY: CssTree = {
+  '@layer base': {
+    '*': { 'border-color': 'var(--border)', 'outline-color': 'color-mix(in oklab, var(--ring) 50%, transparent)' },
+    body: { 'background-color': 'var(--background)', color: 'var(--foreground)', 'font-family': 'var(--font-sans)' },
+  },
   '@font-face': {
     'font-family': '"ABC Marist"',
     src: 'url("/fonts/ABCMarist-Regular.otf") format("opentype")',
@@ -19,6 +23,11 @@ const FONT_FACE: CssTree = {
 
 const css: CssTree = {
   '@layer base': {
+    body: {
+      'font-weight': '500',
+      '-webkit-font-smoothing': 'antialiased',
+      '-moz-osx-font-smoothing': 'grayscale',
+    },
     '[data-slot="avatar"], .rounded-full': { 'border-radius': '9999px' },
   },
   '@utility text-stat': {
@@ -78,14 +87,15 @@ function serialize(tree: CssTree, indent = ''): string {
 }
 
 const tokens = await Bun.file('tokens.css').text();
-const light = readBlock(tokens, ':root');
+const rootVars = readBlock(tokens, ':root');
+const light = { ...rootVars };
 const dark = readBlock(tokens, '.dark');
 
 // Font stacks are mode-independent: shadcn reads them from the @theme block, not from :root.
 const theme: Record<string, string> = {};
 for (const [name, value] of Object.entries(light)) {
   if (name.startsWith('font-')) {
-    theme[name] = value;
+    theme[name] = value.replace(/^var\(--(font-[\w-]+)\)$/, (reference, fontName) => rootVars[fontName] ?? reference);
     delete light[name];
   } else if (name !== 'radius') {
     theme[`color-${name}`] = `var(--${name})`;
@@ -150,7 +160,7 @@ const registry = {
 const themeCss = [
   '@custom-variant dark (&:is(.dark *));',
   serialize({ '@theme inline': Object.fromEntries(Object.entries(theme).map(([key, value]) => [`--${key}`, value])) }),
-  serialize(FONT_FACE),
+  serialize(THEME_CSS_ONLY),
   serialize(css),
 ].join('\n\n');
 

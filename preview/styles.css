@@ -5,7 +5,3 @@
 @import "../theme.css";
 
 @source "../registry";
-
-body {
-  font-family: var(--typeface-sans);
-}

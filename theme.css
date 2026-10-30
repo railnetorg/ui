@@ -67,6 +67,7 @@
   --color-primary-500: var(--primary-500);
   --font-serif: "ABC Marist", "Georgia", serif;
   --font-sans: "Inter Tight", "Inter", system-ui, sans-serif;
+  --font-heading: "ABC Marist", "Georgia", serif;
   --radius-xs: 0;
   --radius-sm: 0;
   --radius-md: 0;
@@ -77,6 +78,17 @@
   --radius-4xl: 0;
 }
 
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+}
 @font-face {
   font-family: "ABC Marist";
   src: url("/fonts/ABCMarist-Regular.otf") format("opentype");
@@ -86,6 +98,11 @@
 }
 
 @layer base {
+  body {
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
   [data-slot="avatar"],
   .rounded-full {
     border-radius: 9999px;

@@ -77,6 +77,7 @@
           "color-primary-500": "var(--primary-500)",
           "font-serif": "\"ABC Marist\", \"Georgia\", serif",
           "font-sans": "\"Inter Tight\", \"Inter\", system-ui, sans-serif",
+          "font-heading": "\"ABC Marist\", \"Georgia\", serif",
           "radius-xs": "0",
           "radius-sm": "0",
           "radius-md": "0",
@@ -193,6 +194,11 @@
       },
       "css": {
         "@layer base": {
+          "body": {
+            "font-weight": "500",
+            "-webkit-font-smoothing": "antialiased",
+            "-moz-osx-font-smoothing": "grayscale"
+          },
           "[data-slot=\"avatar\"], .rounded-full": {
             "border-radius": "9999px"
           }
