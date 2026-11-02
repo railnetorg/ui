@@ -1,12 +1,14 @@
-import { Loading03Icon } from '@hugeicons/core-free-icons';
-import { HugeiconsIcon } from '@hugeicons/react';
+import { IconPlaceholder } from '@/components/icon-placeholder';
 import { cn } from '@/lib/utils';
 
-function Spinner({ className, strokeWidth = 2, ...props }: React.ComponentProps<'svg'>) {
+function Spinner({ className, ...props }: Omit<React.ComponentProps<'svg'>, 'strokeWidth'>) {
   return (
-    <HugeiconsIcon
-      icon={Loading03Icon}
-      strokeWidth={Number.parseFloat(strokeWidth.toString())}
+    <IconPlaceholder
+      lucide="Loader2Icon"
+      tabler="IconLoader"
+      hugeicons="Loading03Icon"
+      phosphor="SpinnerIcon"
+      remixicon="RiLoaderLine"
       role="status"
       aria-label="Loading"
       className={cn('size-4 animate-spin', className)}

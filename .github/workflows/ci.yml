@@ -48,6 +48,19 @@ jobs:
           grep -q -- '--deep-red: #500000' src/index.css
           printf "import { Badge } from '@/components/ui/badge'\nimport { ChartContainer } from '@/components/ui/chart'\nimport { Dialog } from '@/components/ui/dialog'\n\nexport default function App() {\n  return <ChartContainer config={{}}><Dialog><Badge variant=\"brand\">brand</Badge></Dialog></ChartContainer>\n}\n" > src/App.tsx
           bun run build
+      - name: Swap icons for the consumer's library
+        working-directory: .fixture
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ../node_modules/.bin/shadcn init -t vite -b base -p maia -n tabler-app --no-monorepo -y
+          cd tabler-app
+          sed -i 's/"iconLibrary": "hugeicons"/"iconLibrary": "tabler"/' components.json
+          bun add @tabler/icons-react
+          ../../node_modules/.bin/shadcn add ../r/select.json ../r/dialog.json ../r/spinner.json ../r/sonner.json -y -o
+          if grep -E "@hugeicons|IconPlaceholder" src/components/ui/{select,dialog,spinner,sonner}.tsx; then exit 1; fi
+          printf "import { Dialog } from '@/components/ui/dialog'\nimport { Select } from '@/components/ui/select'\nimport { Toaster } from '@/components/ui/sonner'\nimport { Spinner } from '@/components/ui/spinner'\n\nexport default function App() {\n  return <Dialog><Select /><Spinner /><Toaster /></Dialog>\n}\n" > src/App.tsx
+          bun run build
 
   deploy:
     name: Deploy preview

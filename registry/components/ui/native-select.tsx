@@ -1,6 +1,5 @@
-import { UnfoldMoreIcon } from '@hugeicons/core-free-icons';
-import { HugeiconsIcon } from '@hugeicons/react';
 import type * as React from 'react';
+import { IconPlaceholder } from '@/components/icon-placeholder';
 import { cn } from '@/lib/utils';
 
 type NativeSelectProps = Omit<React.ComponentProps<'select'>, 'size'> & {
@@ -20,9 +19,12 @@ function NativeSelect({ className, size = 'default', ...props }: NativeSelectPro
         className="h-9 w-full min-w-0 select-none appearance-none rounded-md border border-input bg-input/30 py-1 pr-8 pl-3 text-sm outline-none transition-colors selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 data-[size=sm]:h-8 dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 dark:hover:bg-input/50"
         {...props}
       />
-      <HugeiconsIcon
-        icon={UnfoldMoreIcon}
-        strokeWidth={2}
+      <IconPlaceholder
+        lucide="ChevronDownIcon"
+        tabler="IconSelector"
+        hugeicons="UnfoldMoreIcon"
+        phosphor="CaretDownIcon"
+        remixicon="RiArrowDownSLine"
         className="pointer-events-none absolute top-1/2 right-3.5 size-4 -translate-y-1/2 select-none text-muted-foreground"
         aria-hidden="true"
         data-slot="native-select-icon"

@@ -1,9 +1,8 @@
 'use client';
 
-import { ArrowDownIcon, ArrowLeftIcon, ArrowRightIcon } from '@hugeicons/core-free-icons';
-import { HugeiconsIcon } from '@hugeicons/react';
 import * as React from 'react';
 import { type DayButton, DayPicker, getDefaultClassNames, type Locale } from 'react-day-picker';
+import { IconPlaceholder } from '@/components/icon-placeholder';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -110,17 +109,43 @@ function Calendar({
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === 'left') {
             return (
-              <HugeiconsIcon icon={ArrowLeftIcon} strokeWidth={2} className={cn('size-4', className)} {...props} />
+              <IconPlaceholder
+                lucide="ChevronLeftIcon"
+                tabler="IconChevronLeft"
+                hugeicons="ArrowLeftIcon"
+                phosphor="CaretLeftIcon"
+                remixicon="RiArrowLeftSLine"
+                className={cn('size-4', className)}
+                {...props}
+              />
             );
           }
 
           if (orientation === 'right') {
             return (
-              <HugeiconsIcon icon={ArrowRightIcon} strokeWidth={2} className={cn('size-4', className)} {...props} />
+              <IconPlaceholder
+                lucide="ChevronRightIcon"
+                tabler="IconChevronRight"
+                hugeicons="ArrowRightIcon"
+                phosphor="CaretRightIcon"
+                remixicon="RiArrowRightSLine"
+                className={cn('size-4', className)}
+                {...props}
+              />
             );
           }
 
-          return <HugeiconsIcon icon={ArrowDownIcon} strokeWidth={2} className={cn('size-4', className)} {...props} />;
+          return (
+            <IconPlaceholder
+              lucide="ChevronDownIcon"
+              tabler="IconChevronDown"
+              hugeicons="ArrowDownIcon"
+              phosphor="CaretDownIcon"
+              remixicon="RiArrowDownSLine"
+              className={cn('size-4', className)}
+              {...props}
+            />
+          );
         },
         DayButton: ({ ...props }) => <CalendarDayButton locale={locale} {...props} />,
         WeekNumber: ({ children, ...props }) => {

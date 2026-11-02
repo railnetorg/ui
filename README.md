@@ -1,6 +1,6 @@
 # Railnet UI
 
-Railnet's brand tokens and a [shadcn registry](https://ui.shadcn.com/docs/registry) of base components (shadcn `base-maia` on Base UI, Hugeicons), installed straight from this repo.
+Railnet's brand tokens and a [shadcn registry](https://ui.shadcn.com/docs/registry) of base components (shadcn `base-maia` on Base UI), installed straight from this repo.
 
 - **Tokens are shared.** Colors (light and dark), fonts, radius and typography utilities come from `tokens.css`, the only place a brand value is written.
 - **Components are yours.** `shadcn add` copies a component into your app once; from then on your team owns it and changes it freely.
@@ -8,18 +8,18 @@ Railnet's brand tokens and a [shadcn registry](https://ui.shadcn.com/docs/regist
 
 ## Install
 
-Pin a release tag (`#v0.3.4`) so every app knows which brand version it carries.
+Pin a release tag (`#v0.4.0`) so every app knows which brand version it carries.
 
 ### React + shadcn
 
 ```bash
-bunx shadcn@latest add railnetorg/ui/railnet-theme#v0.3.4
-bunx shadcn@latest add railnetorg/ui/button#v0.3.4 railnetorg/ui/dialog#v0.3.4
+bunx shadcn@latest add railnetorg/ui/railnet-theme#v0.4.0
+bunx shadcn@latest add railnetorg/ui/button#v0.4.0 railnetorg/ui/dialog#v0.4.0
 ```
 
 The theme writes the tokens into your CSS file (`:root`, `.dark`, `@theme inline`) and adds the typography utilities (`text-stat`, `text-label`, `text-section-label`, `text-body-lg`, `text-uppercase`). A component's own dependencies on other Railnet components resolve from `main`.
 
-Components are built for the `base-maia` style (Base UI, Hugeicons). On a Radix or lucide app, take the theme and keep your own components.
+Components are built for the `base-maia` style (Base UI). Their icons follow the `iconLibrary` of your `components.json` (`lucide`, `tabler`, `hugeicons`, `phosphor` or `remixicon`): `shadcn add` writes the matching imports, and the icon package is the one `shadcn init` installed. On a Radix app, take the theme and keep your own components.
 
 ### Tailwind v4 without shadcn
 
@@ -38,7 +38,7 @@ To use the registry components there too, run `bunx shadcn@latest init` first: t
 Copy `tokens.css` from the tag and use the variables (`var(--primary)`, `var(--font-sans)`…). To refresh it:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/railnetorg/ui/v0.3.4/tokens.css -o tokens.css
+curl -fsSL https://raw.githubusercontent.com/railnetorg/ui/v0.4.0/tokens.css -o tokens.css
 ```
 
 ### Mintlify
@@ -54,7 +54,7 @@ Copy the brand colors from `tokens.css` into `docs.json` `colors` by hand; they 
 
 Install the theme as above, then delete what it now owns:
 
-- typography utilities defined by hand (`.text-stat`, `.text-label`… in `@layer utilities`): the theme ships them as `@utility`;
+- typography utilities defined by hand (`.text-stat`, `.text-label`… or as `@utility`): the theme ships them in `@layer utilities`;
 - a `@theme` block that zeroes `--radius-*`;
 - self-hosted or Google Fonts loading of Inter Tight;
 - `font-weight: 500` and font smoothing on `body`.
@@ -69,7 +69,7 @@ Keep the variables only your app uses (`--hero-surface`, chart extras…). Then 
 
 ## Update to a new release
 
-1. Re-run the install command with the new tag (`#v0.3.4`), adding `--diff` to see what changes first.
+1. Re-run the install command with the new tag (`#v0.4.0`), adding `--diff` to see what changes first.
 2. Let your coding agent merge the diff with your local changes, then review it in your PR.
 
 Components you already copied are never updated for you: take a new version only if you want it.
@@ -88,6 +88,7 @@ Each release is announced in Slack with what changed.
 
 - A brand value changes in `tokens.css` only. Run `bun run build:registry`, which regenerates `registry.json` and `theme.css` (CI fails when they are out of date).
 - Add a component with `bunx shadcn add <name>` (writes to `registry/components/ui/`), then `bun run build:registry`.
+- An icon in a component is an `<IconPlaceholder>` naming it in each of the five libraries (copy the names from shadcn's `base` registry). The preview renders the Hugeicons one: add a new icon to `registry/components/icon-placeholder.tsx`.
 - `bun run dev` opens the preview; `bun run lint` and `bun run typecheck` before a PR.
 - To see ABC Marist in the preview, copy the licensed file to `preview/public/fonts/ABCMarist-Regular.otf` (git-ignored, never published).
 - Theme CSS rules take one selector each, never `a, b`: a consumer's formatter splits the list over two lines, shadcn then no longer recognizes the rule and appends a copy on every update.

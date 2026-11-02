@@ -271,7 +271,7 @@
     {
       "name": "accordion",
       "type": "registry:ui",
-      "dependencies": ["@base-ui/react@^1.2.0", "@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": ["@base-ui/react@^1.2.0"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -343,7 +343,7 @@
     {
       "name": "breadcrumb",
       "type": "registry:ui",
-      "dependencies": ["@base-ui/react@^1.2.0", "@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": ["@base-ui/react@^1.2.0"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -379,7 +379,7 @@
     {
       "name": "calendar",
       "type": "registry:ui",
-      "dependencies": ["@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3", "react-day-picker@^9.14.0"],
+      "dependencies": ["react-day-picker@^9.14.0"],
       "registryDependencies": ["railnetorg/ui/button", "utils"],
       "files": [
         {
@@ -403,7 +403,7 @@
     {
       "name": "carousel",
       "type": "registry:ui",
-      "dependencies": ["@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3", "embla-carousel-react@^8.6.0"],
+      "dependencies": ["embla-carousel-react@^8.6.0"],
       "registryDependencies": ["railnetorg/ui/button", "utils"],
       "files": [
         {
@@ -427,7 +427,7 @@
     {
       "name": "checkbox",
       "type": "registry:ui",
-      "dependencies": ["@base-ui/react@^1.2.0", "@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": ["@base-ui/react@^1.2.0"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -451,7 +451,7 @@
     {
       "name": "combobox",
       "type": "registry:ui",
-      "dependencies": ["@base-ui/react@^1.2.0", "@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": ["@base-ui/react@^1.2.0"],
       "registryDependencies": ["railnetorg/ui/button", "railnetorg/ui/checkbox", "railnetorg/ui/input-group", "utils"],
       "files": [
         {
@@ -463,7 +463,7 @@
     {
       "name": "command",
       "type": "registry:ui",
-      "dependencies": ["@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3", "cmdk@^1.1.1"],
+      "dependencies": ["cmdk@^1.1.1"],
       "registryDependencies": ["railnetorg/ui/dialog", "railnetorg/ui/input-group", "utils"],
       "files": [
         {
@@ -475,7 +475,7 @@
     {
       "name": "context-menu",
       "type": "registry:ui",
-      "dependencies": ["@base-ui/react@^1.2.0", "@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": ["@base-ui/react@^1.2.0"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -487,7 +487,7 @@
     {
       "name": "dialog",
       "type": "registry:ui",
-      "dependencies": ["@base-ui/react@^1.2.0", "@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": ["@base-ui/react@^1.2.0"],
       "registryDependencies": ["railnetorg/ui/button", "utils"],
       "files": [
         {
@@ -523,7 +523,7 @@
     {
       "name": "dropdown-menu",
       "type": "registry:ui",
-      "dependencies": ["@base-ui/react@^1.2.0", "@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": ["@base-ui/react@^1.2.0"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -583,7 +583,7 @@
     {
       "name": "input-otp",
       "type": "registry:ui",
-      "dependencies": ["@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3", "input-otp@^1.4.2"],
+      "dependencies": ["input-otp@^1.4.2"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -643,7 +643,7 @@
     {
       "name": "menubar",
       "type": "registry:ui",
-      "dependencies": ["@base-ui/react@^1.2.0", "@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": ["@base-ui/react@^1.2.0"],
       "registryDependencies": ["railnetorg/ui/dropdown-menu", "utils"],
       "files": [
         {
@@ -655,7 +655,7 @@
     {
       "name": "multi-select-filter",
       "type": "registry:ui",
-      "dependencies": ["@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": [],
       "registryDependencies": ["railnetorg/ui/combobox", "utils"],
       "files": [
         {
@@ -667,7 +667,7 @@
     {
       "name": "native-select",
       "type": "registry:ui",
-      "dependencies": ["@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": [],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -679,12 +679,7 @@
     {
       "name": "navigation-menu",
       "type": "registry:ui",
-      "dependencies": [
-        "@base-ui/react@^1.2.0",
-        "@hugeicons/core-free-icons@^4.1.1",
-        "@hugeicons/react@^1.1.3",
-        "class-variance-authority@^0.7.1"
-      ],
+      "dependencies": ["@base-ui/react@^1.2.0", "class-variance-authority@^0.7.1"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -696,7 +691,7 @@
     {
       "name": "pagination",
       "type": "registry:ui",
-      "dependencies": ["@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": [],
       "registryDependencies": ["railnetorg/ui/button", "utils"],
       "files": [
         {
@@ -768,7 +763,7 @@
     {
       "name": "select",
       "type": "registry:ui",
-      "dependencies": ["@base-ui/react@^1.2.0", "@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": ["@base-ui/react@^1.2.0"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -792,7 +787,7 @@
     {
       "name": "sheet",
       "type": "registry:ui",
-      "dependencies": ["@base-ui/react@^1.2.0", "@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": ["@base-ui/react@^1.2.0"],
       "registryDependencies": ["railnetorg/ui/button", "utils"],
       "files": [
         {
@@ -804,12 +799,7 @@
     {
       "name": "sidebar",
       "type": "registry:ui",
-      "dependencies": [
-        "@base-ui/react@^1.2.0",
-        "@hugeicons/core-free-icons@^4.1.1",
-        "@hugeicons/react@^1.1.3",
-        "class-variance-authority@^0.7.1"
-      ],
+      "dependencies": ["@base-ui/react@^1.2.0", "class-variance-authority@^0.7.1"],
       "registryDependencies": [
         "railnetorg/ui/button",
         "railnetorg/ui/input",
@@ -854,7 +844,7 @@
     {
       "name": "sonner",
       "type": "registry:ui",
-      "dependencies": ["@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3", "sonner@^2.0.7"],
+      "dependencies": ["sonner@^2.0.7"],
       "registryDependencies": [],
       "files": [
         {
@@ -866,7 +856,7 @@
     {
       "name": "spinner",
       "type": "registry:ui",
-      "dependencies": ["@hugeicons/core-free-icons@^4.1.1", "@hugeicons/react@^1.1.3"],
+      "dependencies": [],
       "registryDependencies": ["utils"],
       "files": [
         {

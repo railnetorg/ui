@@ -1,6 +1,5 @@
-import { Cancel01Icon, Menu08Icon } from '@hugeicons/core-free-icons';
-import { HugeiconsIcon } from '@hugeicons/react';
 import { useRef } from 'react';
+import { IconPlaceholder } from '@/components/icon-placeholder';
 import {
   Combobox,
   ComboboxContent,
@@ -113,7 +112,14 @@ export function MultiFilterSelect({
             </>
           ) : (
             <>
-              <HugeiconsIcon icon={Menu08Icon} strokeWidth={2} className="size-3" />
+              <IconPlaceholder
+                lucide="ListFilterIcon"
+                tabler="IconFilter"
+                hugeicons="Menu08Icon"
+                phosphor="FunnelSimpleIcon"
+                remixicon="RiFilter3Line"
+                className="size-3"
+              />
               {label}
             </>
           )}
@@ -135,7 +141,14 @@ export function MultiFilterSelect({
             onClick={() => onChange([])}
             className="flex h-full cursor-pointer items-center justify-center px-2.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
-            <HugeiconsIcon icon={Cancel01Icon} strokeWidth={2} className="size-3" />
+            <IconPlaceholder
+              lucide="XIcon"
+              tabler="IconX"
+              hugeicons="Cancel01Icon"
+              phosphor="XIcon"
+              remixicon="RiCloseLine"
+              className="size-3"
+            />
           </button>
         </>
       )}

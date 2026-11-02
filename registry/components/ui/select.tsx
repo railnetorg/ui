@@ -1,9 +1,8 @@
 'use client';
 
 import { Select as SelectPrimitive } from '@base-ui/react/select';
-import { ArrowDown01Icon, ArrowUp01Icon, Tick02Icon } from '@hugeicons/core-free-icons';
-import { HugeiconsIcon } from '@hugeicons/react';
 import type * as React from 'react';
+import { IconPlaceholder } from '@/components/icon-placeholder';
 import { cn } from '@/lib/utils';
 
 const Select = SelectPrimitive.Root;
@@ -39,9 +38,12 @@ function SelectTrigger({
       {children}
       <SelectPrimitive.Icon
         render={
-          <HugeiconsIcon
-            icon={ArrowDown01Icon}
-            strokeWidth={2}
+          <IconPlaceholder
+            lucide="ChevronDownIcon"
+            tabler="IconChevronDown"
+            hugeicons="ArrowDown01Icon"
+            phosphor="CaretDownIcon"
+            remixicon="RiArrowDownSLine"
             className="pointer-events-none size-4 text-muted-foreground"
           />
         }
@@ -115,7 +117,14 @@ function SelectItem({ className, children, ...props }: SelectPrimitive.Item.Prop
       <SelectPrimitive.ItemIndicator
         render={<span className="pointer-events-none absolute right-2 flex size-4 items-center justify-center" />}
       >
-        <HugeiconsIcon icon={Tick02Icon} strokeWidth={2} className="pointer-events-none" />
+        <IconPlaceholder
+          lucide="CheckIcon"
+          tabler="IconCheck"
+          hugeicons="Tick02Icon"
+          phosphor="CheckIcon"
+          remixicon="RiCheckLine"
+          className="pointer-events-none"
+        />
       </SelectPrimitive.ItemIndicator>
     </SelectPrimitive.Item>
   );
@@ -141,7 +150,13 @@ function SelectScrollUpButton({ className, ...props }: React.ComponentProps<type
       )}
       {...props}
     >
-      <HugeiconsIcon icon={ArrowUp01Icon} strokeWidth={2} />
+      <IconPlaceholder
+        lucide="ChevronUpIcon"
+        tabler="IconChevronUp"
+        hugeicons="ArrowUp01Icon"
+        phosphor="CaretUpIcon"
+        remixicon="RiArrowUpSLine"
+      />
     </SelectPrimitive.ScrollUpArrow>
   );
 }
@@ -156,7 +171,13 @@ function SelectScrollDownButton({ className, ...props }: React.ComponentProps<ty
       )}
       {...props}
     >
-      <HugeiconsIcon icon={ArrowDown01Icon} strokeWidth={2} />
+      <IconPlaceholder
+        lucide="ChevronDownIcon"
+        tabler="IconChevronDown"
+        hugeicons="ArrowDown01Icon"
+        phosphor="CaretDownIcon"
+        remixicon="RiArrowDownSLine"
+      />
     </SelectPrimitive.ScrollDownArrow>
   );
 }

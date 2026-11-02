@@ -1,12 +1,5 @@
-import {
-  Alert02Icon,
-  CheckmarkCircle02Icon,
-  InformationCircleIcon,
-  Loading03Icon,
-  MultiplicationSignCircleIcon,
-} from '@hugeicons/core-free-icons';
-import { HugeiconsIcon } from '@hugeicons/react';
 import { Toaster as Sonner, type ToasterProps, toast } from 'sonner';
+import { IconPlaceholder } from '@/components/icon-placeholder';
 
 const Toaster = ({ ...props }: ToasterProps) => {
   return (
@@ -14,11 +7,56 @@ const Toaster = ({ ...props }: ToasterProps) => {
       theme="light"
       className="toaster group"
       icons={{
-        success: <HugeiconsIcon icon={CheckmarkCircle02Icon} strokeWidth={2} className="size-4" />,
-        info: <HugeiconsIcon icon={InformationCircleIcon} strokeWidth={2} className="size-4" />,
-        warning: <HugeiconsIcon icon={Alert02Icon} strokeWidth={2} className="size-4" />,
-        error: <HugeiconsIcon icon={MultiplicationSignCircleIcon} strokeWidth={2} className="size-4" />,
-        loading: <HugeiconsIcon icon={Loading03Icon} strokeWidth={2} className="size-4 animate-spin" />,
+        success: (
+          <IconPlaceholder
+            lucide="CircleCheckIcon"
+            tabler="IconCircleCheck"
+            hugeicons="CheckmarkCircle02Icon"
+            phosphor="CheckCircleIcon"
+            remixicon="RiCheckboxCircleLine"
+            className="size-4"
+          />
+        ),
+        info: (
+          <IconPlaceholder
+            lucide="InfoIcon"
+            tabler="IconInfoCircle"
+            hugeicons="InformationCircleIcon"
+            phosphor="InfoIcon"
+            remixicon="RiInformationLine"
+            className="size-4"
+          />
+        ),
+        warning: (
+          <IconPlaceholder
+            lucide="TriangleAlertIcon"
+            tabler="IconAlertTriangle"
+            hugeicons="Alert02Icon"
+            phosphor="WarningIcon"
+            remixicon="RiErrorWarningLine"
+            className="size-4"
+          />
+        ),
+        error: (
+          <IconPlaceholder
+            lucide="OctagonXIcon"
+            tabler="IconAlertOctagon"
+            hugeicons="MultiplicationSignCircleIcon"
+            phosphor="XCircleIcon"
+            remixicon="RiCloseCircleLine"
+            className="size-4"
+          />
+        ),
+        loading: (
+          <IconPlaceholder
+            lucide="Loader2Icon"
+            tabler="IconLoader"
+            hugeicons="Loading03Icon"
+            phosphor="SpinnerIcon"
+            remixicon="RiLoaderLine"
+            className="size-4 animate-spin"
+          />
+        ),
       }}
       style={
         {
