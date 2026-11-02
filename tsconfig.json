@@ -13,7 +13,8 @@
     "noEmit": true,
     "types": ["bun"],
     "paths": {
-      "@/*": ["./registry/*"]
+      "@/*": ["./registry/*"],
+      "@preview/*": ["./preview/*"]
     }
   },
   "include": ["registry", "preview", "scripts", "vite.config.ts"]

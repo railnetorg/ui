@@ -6,5 +6,10 @@ export default defineConfig({
   root: 'preview',
   base: './',
   plugins: [react(), tailwindcss()],
-  resolve: { alias: { '@': new URL('./registry', import.meta.url).pathname } },
+  resolve: {
+    alias: {
+      '@preview': new URL('./preview', import.meta.url).pathname,
+      '@': new URL('./registry', import.meta.url).pathname,
+    },
+  },
 });
