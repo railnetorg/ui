@@ -103,6 +103,9 @@ for (const [name, value] of Object.entries(light)) {
 }
 for (const size of ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']) theme[`radius-${size}`] = '0';
 
+// Consumers install a component's dependencies at the range this repo builds and types against, not at latest.
+const { devDependencies: testedVersions } = await Bun.file('package.json').json();
+
 const componentItems = [];
 for (const file of readdirSync(UI_DIR).toSorted()) {
   const source = await Bun.file(`${UI_DIR}/${file}`).text();
@@ -117,7 +120,10 @@ for (const file of readdirSync(UI_DIR).toSorted()) {
     } else if (!specifier.startsWith('@/')) {
       const segments = specifier.split('/');
       const packageName = specifier.startsWith('@') ? segments.slice(0, 2).join('/') : (segments[0] as string);
-      if (!PEER_PACKAGES.has(packageName)) dependencies.add(packageName);
+      if (PEER_PACKAGES.has(packageName)) continue;
+      const range = testedVersions[packageName];
+      if (!range) throw new Error(`${file} imports ${packageName}, which package.json does not pin`);
+      dependencies.add(`${packageName}@${range}`);
     }
   }
   componentItems.push({
@@ -139,9 +145,24 @@ const registry = {
       type: 'registry:theme',
       title: 'Railnet theme',
       description: 'Railnet brand tokens (light and dark), fonts, radius and typography utilities.',
-      docs: 'ABC Marist is licensed: serve /fonts/ABCMarist-Regular.otf from your app. Load Inter Tight from Google Fonts or self-host it.',
+      docs: 'ABC Marist is licensed: serve /fonts/ABCMarist-Regular.otf from your app. Remove the font import shadcn init added (Geist, Figtree…).',
+      registryDependencies: [`${REPO}/inter-tight`],
       cssVars: { theme, light, dark },
       css,
+    },
+    {
+      name: 'inter-tight',
+      type: 'registry:font',
+      title: 'Inter Tight',
+      font: {
+        family: "'Inter Tight Variable', sans-serif",
+        provider: 'google',
+        import: 'Inter_Tight',
+        variable: '--font-sans',
+        subsets: ['latin'],
+        // shadcn writes this value verbatim into the CSS @import, so it cannot carry a version.
+        dependency: '@fontsource-variable/inter-tight',
+      },
     },
     {
       name: 'railnet-logo',

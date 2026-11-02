@@ -44,9 +44,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          ../../node_modules/.bin/shadcn add ../r/railnet-theme.json ../r/badge.json ../r/dialog.json -y -o
+          ../../node_modules/.bin/shadcn add ../r/railnet-theme.json ../r/badge.json ../r/dialog.json ../r/chart.json -y -o
           grep -q -- '--deep-red: #500000' src/index.css
-          printf "import { Badge } from '@/components/ui/badge'\nimport { Dialog } from '@/components/ui/dialog'\n\nexport default function App() {\n  return <Dialog><Badge variant=\"brand\">brand</Badge></Dialog>\n}\n" > src/App.tsx
+          printf "import { Badge } from '@/components/ui/badge'\nimport { ChartContainer } from '@/components/ui/chart'\nimport { Dialog } from '@/components/ui/dialog'\n\nexport default function App() {\n  return <ChartContainer config={{}}><Dialog><Badge variant=\"brand\">brand</Badge></Dialog></ChartContainer>\n}\n" > src/App.tsx
           bun run build
 
   deploy:

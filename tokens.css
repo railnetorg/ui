@@ -67,7 +67,7 @@
   --primary-500: #500000;
 
   --font-serif: "ABC Marist", "Georgia", serif;
-  --font-sans: "Inter Tight", "Inter", system-ui, sans-serif;
+  --font-sans: "Inter Tight Variable", "Inter Tight", "Inter", system-ui, sans-serif;
   --font-heading: var(--font-serif);
 }
 
