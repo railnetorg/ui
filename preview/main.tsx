@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Toaster } from '@/components/ui/sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-const VERSION = 'v0.3.0';
+const VERSION = 'v0.3.1';
 const INSTALL_COMMAND = `bunx shadcn@latest add railnetorg/ui/railnet-theme#${VERSION}`;
 
 type HeaderProps = { dark: boolean; onToggleDark: () => void };

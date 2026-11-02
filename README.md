@@ -8,13 +8,13 @@ Railnet's brand tokens and a [shadcn registry](https://ui.shadcn.com/docs/regist
 
 ## Install
 
-Pin a release tag (`#v0.3.0`) so every app knows which brand version it carries.
+Pin a release tag (`#v0.3.1`) so every app knows which brand version it carries.
 
 ### React + shadcn
 
 ```bash
-bunx shadcn@latest add railnetorg/ui/railnet-theme#v0.3.0
-bunx shadcn@latest add railnetorg/ui/button#v0.3.0 railnetorg/ui/dialog#v0.3.0
+bunx shadcn@latest add railnetorg/ui/railnet-theme#v0.3.1
+bunx shadcn@latest add railnetorg/ui/button#v0.3.1 railnetorg/ui/dialog#v0.3.1
 ```
 
 The theme writes the tokens into your CSS file (`:root`, `.dark`, `@theme inline`) and adds the typography utilities (`text-stat`, `text-label`, `text-section-label`, `text-body-lg`, `text-uppercase`). A component's own dependencies on other Railnet components resolve from `main`.
@@ -38,7 +38,7 @@ To use the registry components there too, run `bunx shadcn@latest init` first: t
 Copy `tokens.css` from the tag and use the variables (`var(--primary)`, `var(--font-sans)`…). To refresh it:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/railnetorg/ui/v0.3.0/tokens.css -o tokens.css
+curl -fsSL https://raw.githubusercontent.com/railnetorg/ui/v0.3.1/tokens.css -o tokens.css
 ```
 
 ### Mintlify
@@ -53,7 +53,7 @@ Copy the brand colors from `tokens.css` into `docs.json` `colors` by hand; they 
 
 ## Update to a new release
 
-1. Re-run the install command with the new tag (`#v0.3.0`), adding `--diff` to see what changes first.
+1. Re-run the install command with the new tag (`#v0.3.1`), adding `--diff` to see what changes first.
 2. Let your coding agent merge the diff with your local changes, then review it in your PR.
 
 Components you already copied are never updated for you: take a new version only if you want it.

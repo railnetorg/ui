@@ -155,7 +155,7 @@ const registry = {
       type: 'registry:font',
       title: 'Inter Tight',
       font: {
-        family: "'Inter Tight Variable', sans-serif",
+        family: rootVars['font-sans'],
         provider: 'google',
         import: 'Inter_Tight',
         variable: '--font-sans',

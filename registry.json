@@ -243,7 +243,7 @@
       "type": "registry:font",
       "title": "Inter Tight",
       "font": {
-        "family": "'Inter Tight Variable', sans-serif",
+        "family": "\"Inter Tight Variable\", \"Inter Tight\", \"Inter\", system-ui, sans-serif",
         "provider": "google",
         "import": "Inter_Tight",
         "variable": "--font-sans",
