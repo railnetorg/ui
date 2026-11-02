@@ -1,95 +1,33 @@
 # Railnet UI
 
-Railnet's brand tokens and a [shadcn registry](https://ui.shadcn.com/docs/registry) of base components (shadcn `base-maia` on Base UI), installed straight from this repo.
-
-- **Tokens are shared.** Colors (light and dark), fonts, radius and typography utilities come from `tokens.css`, the only place a brand value is written.
-- **Components are yours.** `shadcn add` copies a component into your app once; from then on your team owns it and changes it freely.
-- **Browse** the components in light and dark: https://external.railnet.app/ui/
+Railnet brand tokens and a [shadcn registry](https://ui.shadcn.com/docs/registry) of `base-maia` components (Base UI). Tokens are shared; a component you add is yours to change. Preview: https://external.railnet.app/ui/
 
 ## Install
 
-Pin a release tag (`#v0.4.0`) so every app knows which brand version it carries.
-
-### React + shadcn
+Pin a release tag:
 
 ```bash
 bunx shadcn@latest add railnetorg/ui/railnet-theme#v0.4.0
 bunx shadcn@latest add railnetorg/ui/button#v0.4.0 railnetorg/ui/dialog#v0.4.0
 ```
 
-The theme writes the tokens into your CSS file (`:root`, `.dark`, `@theme inline`) and adds the typography utilities (`text-stat`, `text-label`, `text-section-label`, `text-body-lg`, `text-uppercase`). A component's own dependencies on other Railnet components resolve from `main`.
+- Icons follow the `iconLibrary` of your `components.json`.
+- Radix app: take the theme, keep your components.
+- Tailwind without shadcn: import `tokens.css` and `theme.css` from the tag.
+- Plain CSS: import `tokens.css` and use the variables.
+- Monorepo: point `tailwind.css` in `components.json` at the shared stylesheet.
 
-Components are built for the `base-maia` style (Base UI). Their icons follow the `iconLibrary` of your `components.json` (`lucide`, `tabler`, `hugeicons`, `phosphor` or `remixicon`): `shadcn add` writes the matching imports, and the icon package is the one `shadcn init` installed. On a Radix app, take the theme and keep your own components.
+**Fonts.** The theme installs Inter Tight; remove the font `shadcn init` added. ABC Marist is licensed and never lives here: serve it from your app at `/fonts/ABCMarist-Regular.otf`.
 
-### Tailwind v4 without shadcn
+**Update.** Re-run `add` with the new tag and `--diff`. Copied components never change on their own.
 
-Copy `tokens.css` and `theme.css` from the tag into your app and import both:
-
-```css
-@import "tailwindcss";
-@import "./tokens.css";
-@import "./theme.css";
-```
-
-To use the registry components there too, run `bunx shadcn@latest init` first: they need `tw-animate-css` and `shadcn/tailwind.css` (animations and `data-*` variants), which init installs and imports.
-
-### Plain CSS (static pages, Astro without Tailwind, React 18 decks)
-
-Copy `tokens.css` from the tag and use the variables (`var(--primary)`, `var(--font-sans)`…). To refresh it:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/railnetorg/ui/v0.4.0/tokens.css -o tokens.css
-```
-
-### Mintlify
-
-Copy the brand colors from `tokens.css` into `docs.json` `colors` by hand; they rarely change.
-
-### Monorepo (one shared CSS for several apps)
-
-- In the `components.json` you run `shadcn add` from, point `tailwind.css` at the shared stylesheet (for example `"css": "../ui/src/styles.css"`), so the tokens land where every app imports them.
-- `shadcn add` installs `@fontsource-variable/inter-tight` in the package you run it from: move it to the package whose CSS imports it.
-
-### Migrating an app that already has the brand CSS
-
-Install the theme as above, then delete what it now owns:
-
-- typography utilities defined by hand (`.text-stat`, `.text-label`… or as `@utility`): the theme ships them in `@layer utilities`;
-- a `@theme` block that zeroes `--radius-*`;
-- self-hosted or Google Fonts loading of Inter Tight;
-- `font-weight: 500` and font smoothing on `body`.
-
-Keep the variables only your app uses (`--hero-surface`, chart extras…). Then build the app on `main` and on your branch and compare the generated CSS rule by rule: every difference should be a value written as a variable instead of a literal, never a different value.
-
-## Fonts
-
-- **Inter Tight** (sans): `railnet-theme` installs it through the `inter-tight` item (`@fontsource-variable/inter-tight`). Without shadcn, `bun add @fontsource-variable/inter-tight` and `@import "@fontsource-variable/inter-tight";`.
-- `shadcn init` adds its own font import (Geist, Figtree…): remove it once the theme is installed.
-- **ABC Marist** (serif) is licensed and never lives in this repo. Serve the file from your app at `/fonts/ABCMarist-Regular.otf`. `theme.css` declares the `@font-face`; on a shadcn app, add the block from `theme.css` to your CSS.
-
-## Update to a new release
-
-1. Re-run the install command with the new tag (`#v0.4.0`), adding `--diff` to see what changes first.
-2. Let your coding agent merge the diff with your local changes, then review it in your PR.
-
-Components you already copied are never updated for you: take a new version only if you want it.
-
-## Releases
-
-Tags follow semver:
-
-- **patch**: a token value changes;
-- **minor**: a token, utility or component is added;
-- **major**: a token or utility is renamed or removed.
-
-Each release is announced in Slack with what changed.
+**Releases.** Semver: patch changes a value, minor adds, major renames or removes.
 
 ## Contributing
 
-- A brand value changes in `tokens.css` only. Run `bun run build:registry`, which regenerates `registry.json` and `theme.css` (CI fails when they are out of date).
-- Add a component with `bunx shadcn add <name>` (writes to `registry/components/ui/`), then `bun run build:registry`.
-- An icon in a component is an `<IconPlaceholder>` naming it in each of the five libraries (copy the names from shadcn's `base` registry). The preview renders the Hugeicons one: add a new icon to `registry/components/icon-placeholder.tsx`.
-- `bun run dev` opens the preview; `bun run lint` and `bun run typecheck` before a PR.
-- To see ABC Marist in the preview, copy the licensed file to `preview/public/fonts/ABCMarist-Regular.otf` (git-ignored, never published).
-- Theme CSS rules take one selector each, never `a, b`: a consumer's formatter splits the list over two lines, shadcn then no longer recognizes the rule and appends a copy on every update.
-- This repo is public: nothing client-specific, no internal URL, no partner name. Product components stay in their apps.
+- Brand values live in `tokens.css` only. Run `bun run build:registry` afterwards; CI fails if `registry.json` or `theme.css` are stale.
+- Add a component with `bunx shadcn add <name>`, then `bun run build:registry`.
+- Icons are `<IconPlaceholder>` with the names from shadcn's `base` registry; add new Hugeicons ones to `registry/components/icon-placeholder.tsx`.
+- Theme CSS rules take one selector each: shadcn duplicates `a, b` rules on update.
+- Public repo: nothing client-specific, no internal URL.
+- `bun run dev`, `bun run lint`, `bun run typecheck`.
