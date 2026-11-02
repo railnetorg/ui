@@ -101,6 +101,7 @@ for (const [name, value] of Object.entries(light)) {
     theme[`color-${name}`] = `var(--${name})`;
   }
 }
+theme.radius = rootVars.radius as string;
 for (const size of ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']) theme[`radius-${size}`] = '0';
 
 // Consumers install a component's dependencies at the range this repo builds and types against, not at latest.
