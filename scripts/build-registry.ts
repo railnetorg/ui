@@ -28,7 +28,6 @@ const css: CssTree = {
       '-webkit-font-smoothing': 'antialiased',
       '-moz-osx-font-smoothing': 'grayscale',
     },
-    '[data-slot="avatar"], .rounded-full': { 'border-radius': '9999px' },
   },
   '@utility text-stat': {
     'font-family': 'var(--font-serif)',
@@ -74,6 +73,16 @@ function readBlock(source: string, selector: string) {
   return vars;
 }
 
+// shadcn matches an existing rule by its exact selector text; a consumer's formatter puts `a, b` on two lines and every update then appends a copy.
+function assertSingleSelectors(tree: CssTree) {
+  for (const [key, value] of Object.entries(tree)) {
+    if (typeof value === 'string') continue;
+    if (!key.startsWith('@') && key.includes(','))
+      throw new Error(`Theme rule "${key}" lists several selectors: split it`);
+    assertSingleSelectors(value);
+  }
+}
+
 function serialize(tree: CssTree, indent = ''): string {
   const lines: string[] = [];
   for (const [key, value] of Object.entries(tree)) {
@@ -85,6 +94,8 @@ function serialize(tree: CssTree, indent = ''): string {
   }
   return lines.join('\n');
 }
+
+assertSingleSelectors(css);
 
 const tokens = await Bun.file('tokens.css').text();
 const rootVars = readBlock(tokens, ':root');

@@ -8,13 +8,13 @@ Railnet's brand tokens and a [shadcn registry](https://ui.shadcn.com/docs/regist
 
 ## Install
 
-Pin a release tag (`#v0.3.2`) so every app knows which brand version it carries.
+Pin a release tag (`#v0.3.3`) so every app knows which brand version it carries.
 
 ### React + shadcn
 
 ```bash
-bunx shadcn@latest add railnetorg/ui/railnet-theme#v0.3.2
-bunx shadcn@latest add railnetorg/ui/button#v0.3.2 railnetorg/ui/dialog#v0.3.2
+bunx shadcn@latest add railnetorg/ui/railnet-theme#v0.3.3
+bunx shadcn@latest add railnetorg/ui/button#v0.3.3 railnetorg/ui/dialog#v0.3.3
 ```
 
 The theme writes the tokens into your CSS file (`:root`, `.dark`, `@theme inline`) and adds the typography utilities (`text-stat`, `text-label`, `text-section-label`, `text-body-lg`, `text-uppercase`). A component's own dependencies on other Railnet components resolve from `main`.
@@ -38,12 +38,28 @@ To use the registry components there too, run `bunx shadcn@latest init` first: t
 Copy `tokens.css` from the tag and use the variables (`var(--primary)`, `var(--font-sans)`…). To refresh it:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/railnetorg/ui/v0.3.2/tokens.css -o tokens.css
+curl -fsSL https://raw.githubusercontent.com/railnetorg/ui/v0.3.3/tokens.css -o tokens.css
 ```
 
 ### Mintlify
 
 Copy the brand colors from `tokens.css` into `docs.json` `colors` by hand; they rarely change.
+
+### Monorepo (one shared CSS for several apps)
+
+- In the `components.json` you run `shadcn add` from, point `tailwind.css` at the shared stylesheet (for example `"css": "../ui/src/styles.css"`), so the tokens land where every app imports them.
+- `shadcn add` installs `@fontsource-variable/inter-tight` in the package you run it from: move it to the package whose CSS imports it.
+
+### Migrating an app that already has the brand CSS
+
+Install the theme as above, then delete what it now owns:
+
+- typography utilities defined by hand (`.text-stat`, `.text-label`… in `@layer utilities`): the theme ships them as `@utility`;
+- a `@theme` block that zeroes `--radius-*`;
+- self-hosted or Google Fonts loading of Inter Tight;
+- `font-weight: 500` and font smoothing on `body`.
+
+Keep the variables only your app uses (`--hero-surface`, chart extras…). Then build the app on `main` and on your branch and compare the generated CSS rule by rule: every difference should be a value written as a variable instead of a literal, never a different value.
 
 ## Fonts
 
@@ -53,7 +69,7 @@ Copy the brand colors from `tokens.css` into `docs.json` `colors` by hand; they 
 
 ## Update to a new release
 
-1. Re-run the install command with the new tag (`#v0.3.2`), adding `--diff` to see what changes first.
+1. Re-run the install command with the new tag (`#v0.3.3`), adding `--diff` to see what changes first.
 2. Let your coding agent merge the diff with your local changes, then review it in your PR.
 
 Components you already copied are never updated for you: take a new version only if you want it.
@@ -74,4 +90,5 @@ Each release is announced in Slack with what changed.
 - Add a component with `bunx shadcn add <name>` (writes to `registry/components/ui/`), then `bun run build:registry`.
 - `bun run dev` opens the preview; `bun run lint` and `bun run typecheck` before a PR.
 - To see ABC Marist in the preview, copy the licensed file to `preview/public/fonts/ABCMarist-Regular.otf` (git-ignored, never published).
+- Theme CSS rules take one selector each, never `a, b`: a consumer's formatter splits the list over two lines, shadcn then no longer recognizes the rule and appends a copy on every update.
 - This repo is public: nothing client-specific, no internal URL, no partner name. Product components stay in their apps.

@@ -200,9 +200,6 @@
             "font-weight": "500",
             "-webkit-font-smoothing": "antialiased",
             "-moz-osx-font-smoothing": "grayscale"
-          },
-          "[data-slot=\"avatar\"], .rounded-full": {
-            "border-radius": "9999px"
           }
         },
         "@utility text-stat": {
