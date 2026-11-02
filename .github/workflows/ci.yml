@@ -15,9 +15,14 @@ jobs:
   verify:
     name: Verify
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: "1.4.4"
       - run: bun install --frozen-lockfile
       - run: bun run lint
       - run: bun run typecheck
@@ -31,9 +36,14 @@ jobs:
   consumer:
     name: Install into a fresh shadcn app
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: "1.4.4"
       - run: bun install --frozen-lockfile
       - run: node_modules/.bin/shadcn build -o .fixture/r
       - name: Scaffold
@@ -62,11 +72,30 @@ jobs:
           printf "import { Dialog } from '@/components/ui/dialog'\nimport { Select } from '@/components/ui/select'\nimport { Toaster } from '@/components/ui/sonner'\nimport { Spinner } from '@/components/ui/spinner'\n\nexport default function App() {\n  return <Dialog><Select /><Spinner /><Toaster /></Dialog>\n}\n" > src/App.tsx
           bun run build
 
+  audit:
+    name: Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: "1.4.4"
+      - run: bun install --frozen-lockfile
+      # All three come from the shadcn CLI, a dev tool; nothing here ships to consumers.
+      # GHSA-27r3-jxmh-p828 (body-parser < 2.4.0): express behind `shadcn mcp`, which nothing runs. 2.4.0 clears minimumReleaseAge on 2026-11-05: override it, drop this ignore.
+      # GHSA-3f7j-7jwc-fxfj (systeminformation < 5.33.16): Windows-only, CI runs on Linux. 5.33.16 clears minimumReleaseAge on 2026-11-02: override it, drop this ignore.
+      # GHSA-mrhx-c7xc-m3w5 (zod < 4.6.6): zod 3.x validates our own registry JSON in the CLI; no 3.x patch exists.
+      - run: bun audit --audit-level=high --ignore=GHSA-27r3-jxmh-p828 --ignore=GHSA-3f7j-7jwc-fxfj --ignore=GHSA-mrhx-c7xc-m3w5
+
   deploy:
     name: Deploy preview
     if: github.event_name == 'push'
-    needs: [verify, consumer]
+    needs: [verify, consumer, audit]
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       pages: write
       id-token: write
