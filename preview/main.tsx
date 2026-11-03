@@ -3,6 +3,7 @@ import { HugeiconsIcon } from '@hugeicons/react';
 import { Components } from '@preview/components';
 import { Examples } from '@preview/examples';
 import { Foundations } from '@preview/foundations';
+import { Risk } from '@preview/risk';
 import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Button } from '@/components/ui/button';
@@ -62,11 +63,15 @@ function Preview() {
       <Tabs defaultValue="examples" className="p-4">
         <TabsList>
           <TabsTrigger value="examples">Examples</TabsTrigger>
+          <TabsTrigger value="risk">Risk</TabsTrigger>
           <TabsTrigger value="components">Components</TabsTrigger>
           <TabsTrigger value="foundations">Foundations</TabsTrigger>
         </TabsList>
         <TabsContent value="examples" className="pt-4">
           <Examples />
+        </TabsContent>
+        <TabsContent value="risk" className="pt-4">
+          <Risk />
         </TabsContent>
         <TabsContent value="components" className="pt-4">
           <Components />

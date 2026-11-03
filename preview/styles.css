@@ -6,3 +6,14 @@
 @import "../theme.css";
 
 @source "../registry";
+
+/* The Risk app's start bubbles float on their own loop. */
+@keyframes risk-levitate {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 var(--levitate-rise);
+  }
+}
