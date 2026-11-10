@@ -10,14 +10,31 @@ import {
   Coins01Icon,
   Copy01Icon,
   CubeIcon,
-  InformationCircleIcon,
   Link01Icon,
   LinkSquare02Icon,
   PackageIcon,
   Tick02Icon,
 } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { AssessmentBadge, LevelGlyph, Mark, ProjectBadge, type RiskCheck, type RiskLevel } from '@preview/risk/shared';
+import {
+  AssessmentBadge,
+  ChainLogo,
+  CuratorAvatar,
+  EntityAvatar,
+  InfoTip,
+  LEVEL_LABEL,
+  LEVEL_VARIANT,
+  LogoStack,
+  ProjectBadge,
+  ProtocolLogo,
+  type RiskCheck,
+  RiskFactorsCell,
+  type RiskLevel,
+  riskCounts,
+  TokenLogo,
+  TreeElbow,
+  tokenLogoItems,
+} from '@preview/risk/shared';
 import { type ReactNode, useState } from 'react';
 import { Cell, Pie, PieChart } from 'recharts';
 import { Button } from '@/components/ui/button';
@@ -25,7 +42,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
 // ---------------------------------------------------------------------------
@@ -630,36 +646,6 @@ function Icon({ icon, className }: { icon: Parameters<typeof HugeiconsIcon>[0]['
   return <HugeiconsIcon icon={icon} className={cn('size-4', className)} />;
 }
 
-/** A token, protocol or chain logo at the page's 20px. */
-function Logo({ label, className }: { label: string; className?: string }) {
-  return <Mark label={label} className={cn('data-[size=sm]:size-5', className)} />;
-}
-
-/** The info glyph that opens a HoverCard: the header's stats, governance rows and the tier legend. */
-function InfoHint({ label, size = 'size-4', children }: { label: string; size?: string; children: ReactNode }) {
-  return (
-    <HoverCard>
-      <HoverCardTrigger
-        delay={80}
-        closeDelay={40}
-        render={
-          <Button
-            variant="ghost"
-            size="icon-xs"
-            aria-label={`About ${label}`}
-            className="size-5 cursor-default text-muted-foreground hover:bg-transparent hover:text-foreground dark:hover:bg-transparent"
-          >
-            <Icon icon={InformationCircleIcon} className={size} />
-          </Button>
-        }
-      />
-      <HoverCardContent align="start" className="w-80 font-normal text-xs">
-        {children}
-      </HoverCardContent>
-    </HoverCard>
-  );
-}
-
 const ASSET_LINK_CLASS = 'underline decoration-muted-foreground/50 underline-offset-4 hover:decoration-foreground';
 
 /** An asset's name, underlined at rest; it opens the asset page in the app. */
@@ -668,35 +654,6 @@ function AssetLink({ symbol, className }: { symbol: string; className?: string }
     <button type="button" title={`Open the ${symbol} asset page`} className={cn(ASSET_LINK_CLASS, className)}>
       {symbol}
     </button>
-  );
-}
-
-/** Token logos overlapped, the first laid over the second. */
-function TokenStack({
-  tokens,
-  ringClassName = 'ring-card',
-  size = 'sm',
-}: {
-  tokens: string[];
-  ringClassName?: string;
-  size?: 'sm' | 'md';
-}) {
-  return (
-    <span className="isolate inline-flex shrink-0 items-center">
-      {tokens.map((t, i) => (
-        <span
-          key={t}
-          style={{ zIndex: tokens.length - i }}
-          className={cn(
-            'relative inline-flex rounded-full ring-1',
-            ringClassName,
-            i > 0 && (size === 'md' ? '-ml-2' : '-ml-1.5'),
-          )}
-        >
-          <Mark label={t} className={size === 'md' ? 'data-[size=sm]:size-5' : 'data-[size=sm]:size-4'} />
-        </span>
-      ))}
-    </span>
   );
 }
 
@@ -741,7 +698,7 @@ function Stat({ label, value, sub, hint }: { label: string; value: string; sub?:
     <div>
       <div className="mb-1 flex items-center gap-1 font-normal text-muted-foreground text-sm">
         {label}
-        {hint && <InfoHint label={label}>{hint}</InfoHint>}
+        {hint && <InfoTip label={`About ${label}`}>{hint}</InfoTip>}
       </div>
       <div className="text-3xl text-foreground text-stat">{value}</div>
       {sub && <div className="mt-1 text-muted-foreground text-xs">{sub}</div>}
@@ -760,9 +717,8 @@ function VaultPager({ index, total }: { index: number; total: number }) {
       </span>
       <Button
         variant="ghost"
-        size="icon-sm"
+        size="icon-xs"
         aria-label="Next vault"
-        className="size-6 text-muted-foreground hover:text-foreground"
         disabled={at >= total - 1}
         onClick={() => setAt(at + 1)}
       >
@@ -770,9 +726,8 @@ function VaultPager({ index, total }: { index: number; total: number }) {
       </Button>
       <Button
         variant="ghost"
-        size="icon-sm"
+        size="icon-xs"
         aria-label="Previous vault"
-        className="size-6 text-muted-foreground hover:text-foreground"
         disabled={at <= 0}
         onClick={() => setAt(at - 1)}
       >
@@ -817,19 +772,19 @@ function VaultDetailHeader() {
           </div>
           <div className="mt-3 flex flex-wrap items-center gap-4 text-foreground text-sm">
             <span className="inline-flex items-center gap-1.5">
-              <Logo label={VAULT.asset} />
+              <TokenLogo symbol={VAULT.asset} />
               <AssetLink symbol={VAULT.asset} />
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <Logo label={VAULT.protocol} />
+              <ProtocolLogo protocol={VAULT.protocol} />
               {VAULT.protocol}
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <Logo label={VAULT.curator.slice(0, 1)} />
+              <CuratorAvatar name={VAULT.curator} />
               {VAULT.curator}
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <Logo label={VAULT.chain} />
+              <ChainLogo label={VAULT.chain} />
               {VAULT.chain}
             </span>
           </div>
@@ -890,25 +845,28 @@ function FlowRing({ end = false }: { end?: boolean }) {
 /** The flow's "+N": hovering it names the sources it stands for, each with its logos. */
 function MoreSources({ label }: { label: string }) {
   return (
-    <Tooltip>
-      <TooltipTrigger
+    <HoverCard>
+      <HoverCardTrigger
+        delay={80}
+        closeDelay={40}
         render={
           <span className="cursor-default underline decoration-dotted underline-offset-2 outline-none focus-visible:text-foreground">
             {label}
           </span>
         }
       />
-      <TooltipContent side="top" className="px-3.5 py-2.5">
+      <HoverCardContent align="start" className="w-80 font-normal text-xs">
         <ul className="space-y-2">
           {MORE_SOURCES.map((s) => (
             <li key={s.name} className="flex items-center gap-1.5">
-              <TokenStack tokens={s.tokens} ringClassName="ring-foreground" size="md" />
+              {/* ring-popover: the card's own surface. */}
+              <LogoStack items={tokenLogoItems(s.tokens)} ringClassName="ring-popover" size="md" />
               {s.name}
             </li>
           ))}
         </ul>
-      </TooltipContent>
-    </Tooltip>
+      </HoverCardContent>
+    </HoverCard>
   );
 }
 
@@ -949,7 +907,7 @@ function FlowStep({
             <span className="flex flex-wrap items-center gap-x-3 gap-y-1 font-normal text-muted-foreground">
               {node.items.map((item) => (
                 <span key={item.name} className="inline-flex items-center gap-1.5">
-                  {item.tokens.length > 0 && <TokenStack tokens={item.tokens} size="md" />}
+                  {item.tokens.length > 0 && <LogoStack items={tokenLogoItems(item.tokens)} size="md" />}
                   {item.name.startsWith('+') ? <MoreSources label={item.name} /> : item.name}
                 </span>
               ))}
@@ -1087,6 +1045,8 @@ function KindCell({ kind }: { kind: keyof typeof KIND }) {
   );
 }
 
+const STACK_MAX = 4;
+
 /** One collateral named and linked; several as a stack of logos with the full list on hover. */
 function CollateralCell({ collaterals }: { collaterals: string[] }) {
   const [first] = collaterals;
@@ -1094,13 +1054,11 @@ function CollateralCell({ collaterals }: { collaterals: string[] }) {
   if (collaterals.length === 1) {
     return (
       <span className="inline-flex items-center gap-1.5">
-        <Logo label={first} />
+        <TokenLogo symbol={first} />
         <AssetLink symbol={first} className="truncate" />
       </span>
     );
   }
-  const shown = collaterals.slice(0, 4);
-  const rest = collaterals.length - shown.length;
   return (
     <HoverCard>
       <HoverCardTrigger
@@ -1108,14 +1066,10 @@ function CollateralCell({ collaterals }: { collaterals: string[] }) {
         closeDelay={80}
         render={
           <span className="inline-flex cursor-default items-center gap-2">
-            <span className="inline-flex shrink-0 flex-row-reverse items-center pl-2">
-              {[...shown].reverse().map((c) => (
-                <span key={c} className="-ml-2 inline-flex rounded-full ring-2 ring-background">
-                  <Logo label={c} />
-                </span>
-              ))}
-            </span>
-            <span className="text-muted-foreground text-sm">{rest > 0 ? `+${rest}` : collaterals.length}</span>
+            <LogoStack items={tokenLogoItems(collaterals)} size="md" max={STACK_MAX} className="text-sm" />
+            {collaterals.length <= STACK_MAX && (
+              <span className="text-muted-foreground text-sm">{collaterals.length}</span>
+            )}
           </span>
         }
       />
@@ -1124,79 +1078,11 @@ function CollateralCell({ collaterals }: { collaterals: string[] }) {
         <div className="max-h-64 overflow-y-auto">
           {collaterals.map((c) => (
             <div key={c} className="flex items-center gap-2 rounded-sm px-1 py-1 text-sm">
-              <Logo label={c} />
+              <TokenLogo symbol={c} />
               <AssetLink symbol={c} className="truncate" />
             </div>
           ))}
         </div>
-      </HoverCardContent>
-    </HoverCard>
-  );
-}
-
-/** ✓ Strengths / flag To review, as the explore table's hover card lists them. */
-function RiskBreakdown({ checks }: { checks: RiskCheck[] }) {
-  const groups = [
-    { title: 'Strengths', level: 'low' as const, rows: checks.filter((c) => c.level === 'low') },
-    { title: 'To review', level: 'high' as const, rows: checks.filter((c) => c.level !== 'low') },
-  ];
-  return (
-    <div className="space-y-3">
-      {groups
-        .filter((g) => g.rows.length > 0)
-        .map((g) => (
-          <div key={g.title}>
-            <div
-              className={cn(
-                'mb-1.5 flex items-center gap-1.5 font-medium text-sm',
-                g.level === 'low' ? 'text-mint' : 'text-destructive',
-              )}
-            >
-              <LevelGlyph level={g.level} className="size-4" />
-              {g.title}
-            </div>
-            <ul className="space-y-2">
-              {g.rows.map((c) => (
-                <li key={c.label}>
-                  <div className="font-medium text-foreground text-sm">{c.label}</div>
-                  <div className="text-muted-foreground text-xs">{c.detail}</div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-    </div>
-  );
-}
-
-function RiskFactorsCell({ checks }: { checks: RiskCheck[] }) {
-  const ok = checks.filter((c) => c.level === 'low').length;
-  const flagged = checks.length - ok;
-  if (checks.length === 0) return <span className="text-muted-foreground">—</span>;
-  return (
-    <HoverCard>
-      <HoverCardTrigger
-        delay={80}
-        closeDelay={40}
-        render={
-          <span className="inline-flex cursor-default items-center gap-3 text-foreground">
-            {ok > 0 && (
-              <span className="flex items-center gap-1">
-                <LevelGlyph level="low" className="size-4" />
-                {ok}
-              </span>
-            )}
-            {flagged > 0 && (
-              <span className="flex items-center gap-1">
-                <LevelGlyph level="high" className="size-4" />
-                {flagged}
-              </span>
-            )}
-          </span>
-        }
-      />
-      <HoverCardContent align="end" className="w-80">
-        <RiskBreakdown checks={checks} />
       </HoverCardContent>
     </HoverCard>
   );
@@ -1280,7 +1166,7 @@ function HoldingsTab() {
                       <TableCell>{h.pct}%</TableCell>
                       <TableCell>
                         <span className="inline-flex items-center gap-1.5">
-                          <Logo label={h.key === 'aave' ? 'Aave' : VAULT.protocol} />
+                          <ProtocolLogo protocol={h.key === 'aave' ? 'Aave' : VAULT.protocol} />
                           {h.key === 'aave' ? 'Aave' : VAULT.protocol}
                         </span>
                       </TableCell>
@@ -1289,13 +1175,13 @@ function HoldingsTab() {
                       </TableCell>
                       <TableCell>
                         <span className="inline-flex items-center gap-1.5">
-                          <Logo label={VAULT.chain} />
+                          <ChainLogo label={VAULT.chain} />
                           <span className="truncate">{VAULT.chain}</span>
                         </span>
                       </TableCell>
                       <TableCell>{fmtUsd(h.usd)}</TableCell>
                       <TableCell>
-                        <RiskFactorsCell checks={h.checks} />
+                        <RiskFactorsCell {...riskCounts(h.checks)} checks={h.checks} />
                       </TableCell>
                     </TableRow>
                   ))}
@@ -1332,29 +1218,6 @@ function HoldingsTab() {
         </div>
       </div>
     </div>
-  );
-}
-
-/** The elbow tying a tree row to the one it hangs from. */
-function TreeElbow({ depth, isLast }: { depth: 1 | 2; isLast: boolean }) {
-  return (
-    <span
-      aria-hidden
-      className={cn(
-        'pointer-events-none absolute inset-y-0 w-3 text-muted-foreground/25',
-        depth === 1 ? 'left-[22px]' : 'left-[46px]',
-      )}
-    >
-      <span className={cn('absolute top-0 left-0 w-px bg-current', isLast ? 'h-[calc(50%-10px)]' : 'bottom-0')} />
-      <svg
-        className="absolute top-[calc(50%-10px)] left-0 h-[10px] w-3 overflow-visible"
-        viewBox="0 0 12 10"
-        fill="none"
-        preserveAspectRatio="none"
-      >
-        <path d="M0.5 0 C0.5 6.5 3 9.5 12 9.5" stroke="currentColor" strokeWidth="1" />
-      </svg>
-    </span>
   );
 }
 
@@ -1468,7 +1331,7 @@ function TreeLeaf({
       className={cn('border-0 bg-muted/30', !shown && 'pointer-events-none')}
     >
       <SlideCell shown={shown} className={cn('relative text-foreground', depth === 1 ? 'pl-10' : 'pl-16')}>
-        <TreeElbow depth={depth} isLast={isLast} />
+        <TreeElbow depth={depth} isLast={isLast} left={22} />
         <span className="flex items-center gap-1.5 overflow-hidden">
           {onToggle ? (
             <TreeChevron open={!!open} onToggle={onToggle} label={`the markets ${row.label} lends into`} />
@@ -1482,7 +1345,7 @@ function TreeLeaf({
       <SlideCell shown={shown}>{row.pct}</SlideCell>
       <SlideCell shown={shown}>
         <span className="inline-flex items-center gap-1.5">
-          <Logo label={row.protocol} />
+          <ProtocolLogo protocol={row.protocol} />
           {row.protocol}
         </span>
       </SlideCell>
@@ -1491,13 +1354,13 @@ function TreeLeaf({
       </SlideCell>
       <SlideCell shown={shown}>
         <span className="inline-flex items-center gap-1.5">
-          <Logo label="Ethereum" />
+          <ChainLogo label="Ethereum" />
           Ethereum
         </span>
       </SlideCell>
       <SlideCell shown={shown}>{row.usd}</SlideCell>
       <SlideCell shown={shown}>
-        <RiskFactorsCell checks={row.checks} />
+        <RiskFactorsCell {...riskCounts(row.checks)} checks={row.checks} />
       </SlideCell>
     </TableRow>
   );
@@ -1547,14 +1410,14 @@ function RailnetHoldingsRows() {
             <TableCell>100%</TableCell>
             <TableCell>
               <span className="inline-flex items-center gap-1.5">
-                <Logo label="Railnet" />
+                <ProtocolLogo protocol="Railnet" />
                 Railnet
               </span>
             </TableCell>
             <TableCell>—</TableCell>
             <TableCell>
               <span className="inline-flex items-center gap-1.5">
-                <Logo label="Ethereum" />
+                <ChainLogo label="Ethereum" />
                 Ethereum
               </span>
             </TableCell>
@@ -1600,41 +1463,25 @@ function FactorGuideTip({
   className?: string;
 }) {
   return (
-    <Tooltip>
-      <TooltipTrigger
-        render={
-          <Button
-            variant="ghost"
-            size="icon-xs"
-            aria-label={label}
-            className={cn(
-              className,
-              'size-5 text-muted-foreground hover:bg-transparent hover:text-foreground dark:hover:bg-transparent',
-            )}
-          >
-            <Icon icon={InformationCircleIcon} />
-          </Button>
-        }
-      />
-      <TooltipContent side="top" sideOffset={6} className="max-w-sm text-wrap px-3.5 py-3 text-left">
-        <div className="space-y-3">
-          <p>{guide.what}</p>
-          {guide.levels.length > 0 && (
-            <ul className="space-y-2">
-              {guide.levels.map(({ level, when }) => (
-                <li key={level} className="flex items-start gap-2">
-                  <span className="w-16 shrink-0">
-                    <AssessmentBadge level={level} />
-                  </span>
-                  <span className="text-background/70">{when}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-          {guide.note && <p className="text-background/70">{guide.note}</p>}
-        </div>
-      </TooltipContent>
-    </Tooltip>
+    <InfoTip label={label} className={className}>
+      <div className="space-y-3">
+        <p>{guide.what}</p>
+        {guide.levels.length > 0 && (
+          <ul className="space-y-2">
+            {guide.levels.map(({ level, when }) => (
+              <li key={level} className="flex items-start gap-2">
+                {/* Fixed width, so every description starts on the same line. */}
+                <span className="w-16 shrink-0">
+                  <ProjectBadge variant={LEVEL_VARIANT[level]}>{LEVEL_LABEL[level]}</ProjectBadge>
+                </span>
+                <span className="text-muted-foreground">{when}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {guide.note && <p className="text-muted-foreground">{guide.note}</p>}
+      </div>
+    </InfoTip>
   );
 }
 
@@ -1675,9 +1522,7 @@ function Highlighted({ text, highlights = [] }: { text: string; highlights?: str
 function FactorRow({ row }: { row: FactorRowData }) {
   return (
     <div className="text-sm">
-      <span className="float-right mb-3 ml-3">
-        <AssessmentBadge level={row.level} label={row.assessment} />
-      </span>
+      <AssessmentBadge level={row.level} label={row.assessment} float />
       <div className="font-medium text-foreground">
         {row.factor}
         {row.guide && <FactorGuideTip label={`How ${row.factor} is assessed`} guide={row.guide} />}
@@ -1752,7 +1597,7 @@ function CorrelationTable() {
             <TableCell className="whitespace-normal align-top">{r.price}</TableCell>
             <TableCell className="whitespace-normal align-top">
               <span className="flex items-center gap-2">
-                <TokenStack tokens={r.symbols} size="md" />
+                <LogoStack items={tokenLogoItems(r.symbols)} size="md" />
                 <span>
                   <SymbolLinks symbols={r.symbols} />
                   {r.note && <span className="text-muted-foreground"> ({r.note})</span>}
@@ -1797,7 +1642,7 @@ function ExposureTable({
               </TableCell>
               <TableCell className="whitespace-normal align-top">
                 <span className="flex items-center gap-2">
-                  <TokenStack tokens={r.symbols} size="md" />
+                  <LogoStack items={tokenLogoItems(r.symbols)} size="md" />
                   <span>
                     <SymbolLinks symbols={r.symbols} />
                   </span>
@@ -1838,8 +1683,10 @@ function VaultRisks() {
 function ReadingCell({ cell }: { cell: Reading | null }) {
   if (!cell) return <span className="text-muted-foreground">Not assessed</span>;
   return (
-    <Tooltip>
-      <TooltipTrigger
+    <HoverCard>
+      <HoverCardTrigger
+        delay={80}
+        closeDelay={40}
         render={
           <span className="inline-flex flex-wrap items-center gap-1.5 text-foreground outline-none">
             <span>{cell.label}</span>
@@ -1847,10 +1694,10 @@ function ReadingCell({ cell }: { cell: Reading | null }) {
           </span>
         }
       />
-      <TooltipContent side="top" sideOffset={6} className="max-w-sm text-wrap px-3.5 py-3 text-left">
+      <HoverCardContent align="start" className="w-80 font-normal text-xs">
         {cell.detail}
-      </TooltipContent>
-    </Tooltip>
+      </HoverCardContent>
+    </HoverCard>
   );
 }
 
@@ -1877,7 +1724,7 @@ function PositionName({ row, withSkipped = false }: { row: Position; withSkipped
     .join(' · ');
   return (
     <div className="flex min-w-0 items-center gap-2" title={`${row.name} · ${rest}`}>
-      <TokenStack tokens={row.tokens} size="md" />
+      <LogoStack items={tokenLogoItems(row.tokens)} size="md" />
       <span className="min-w-0 truncate whitespace-nowrap">
         <span className="font-medium text-foreground">{row.name}</span>
         <span className="text-muted-foreground"> · {rest}</span>
@@ -1961,9 +1808,9 @@ function PositionRisks() {
                   ...row.collaterals.map((c, i) => (
                     <TableRow key={`${row.key}-${c.key}`} className="border-0 bg-muted/30 align-top">
                       <TableCell className="relative whitespace-normal pl-10 align-top">
-                        <TreeElbow depth={1} isLast={i === row.collaterals.length - 1} />
+                        <TreeElbow isLast={i === row.collaterals.length - 1} left={22} />
                         <div className="flex min-w-0 items-center gap-2 text-foreground">
-                          <TokenStack tokens={[c.symbol]} size="md" />
+                          <LogoStack items={tokenLogoItems([c.symbol])} size="md" />
                           <span className="truncate">
                             <AssetLink symbol={c.symbol} />
                             {c.share != null && <span className="text-muted-foreground"> · {pctLabel(c.share)}</span>}
@@ -2169,9 +2016,9 @@ function GovernanceTab() {
               <span className="inline-flex items-center gap-1 font-normal text-muted-foreground text-sm">
                 {f.label}
                 {f.help && (
-                  <InfoHint label={f.label} size="size-3.5">
+                  <InfoTip label={`About ${f.label}`} iconSize="sm">
                     {f.help}
-                  </InfoHint>
+                  </InfoTip>
                 )}
               </span>
               {f.full ? (
@@ -2265,6 +2112,8 @@ function RepresentationLink({ representation }: { representation: Representation
   );
 }
 
+const CHAIN_STACK = 4;
+
 function AssetDetailHeader({
   asset = ASSET,
   representation,
@@ -2272,14 +2121,15 @@ function AssetDetailHeader({
   asset?: { symbol: string; name: string | null; chains: string[] };
   representation?: Representation;
 }) {
-  const stack = asset.chains.slice(0, 4);
   return (
     <div className="bg-background">
       <div className="px-6 pt-4">
         <div className="pt-3 pb-2">
           <div className="flex items-start justify-between gap-4">
             <h1 className="flex items-center gap-3 text-3xl text-foreground text-stat">
-              <Mark label={asset.symbol} className="data-[size=sm]:size-8" />
+              <span className="inline-flex shrink-0 [&>span]:size-8">
+                <TokenLogo symbol={asset.symbol} />
+              </span>
               {/* The symbol beside the name, unless the name only restates it. */}
               {asset.name && asset.name.toLowerCase() !== asset.symbol.toLowerCase() ? (
                 <span>
@@ -2296,7 +2146,7 @@ function AssetDetailHeader({
               <>
                 <span>Synthetic dollar</span>
                 <span className="inline-flex items-center gap-1.5">
-                  <Logo label="Copper" />
+                  <EntityAvatar name="Copper" />
                   Copper Custody
                 </span>
                 <span className="text-muted-foreground" title="LEI 213800ABCDEF12345678">
@@ -2309,18 +2159,12 @@ function AssetDetailHeader({
               title={asset.chains.join(', ')}
               className="inline-flex items-center gap-1.5 hover:underline"
             >
-              <span className="inline-flex items-center">
-                {stack.map((c, i) => (
-                  <span
-                    key={c}
-                    style={{ zIndex: stack.length - i }}
-                    className={cn('relative inline-flex rounded-full ring-1 ring-background', i > 0 && '-ml-2')}
-                  >
-                    <Logo label={c} />
-                  </span>
-                ))}
-              </span>
-              +{asset.chains.length - stack.length}
+              <LogoStack
+                items={asset.chains.map((c) => ({ key: c, logo: <ChainLogo label={c} /> }))}
+                size="md"
+                max={CHAIN_STACK}
+              />
+              {asset.chains.length <= CHAIN_STACK && `${asset.chains.length} chains`}
             </button>
             {!representation && <span>ERC-4626</span>}
             {representation ? (

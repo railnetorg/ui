@@ -12,19 +12,32 @@ import {
   Coins01Icon,
   DropletIcon,
   Flag02Icon,
-  HourglassIcon,
   Layers01Icon,
   Layout2ColumnIcon,
-  LockIcon,
   MinusSignIcon,
   PackageIcon,
   PercentIcon,
   PlusSignIcon,
   ScanSearchIcon,
-  Tick02Icon,
 } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { LevelGlyph, type RiskCheck, type RiskLevel, VAULT_CHECKS } from '@preview/risk/shared';
+import {
+  ChainLogo,
+  CuratorAvatar,
+  FloatingActionBar,
+  LogoStack,
+  ProtocolLogo,
+  protocolLogoItems,
+  RiskBreakdown,
+  type RiskCheck,
+  RiskCountBadge,
+  RiskFactorsCell,
+  riskCounts,
+  TokenLogo,
+  TreeElbow,
+  tokenLogoItems,
+  VAULT_CHECKS,
+} from '@preview/risk/shared';
 import {
   type CSSProperties,
   Fragment,
@@ -35,7 +48,6 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import {
   Breadcrumb,
@@ -71,9 +83,8 @@ type Icon = typeof PackageIcon;
 type VaultType = 'Vault' | 'Market' | 'Asset' | 'Conduit' | 'MultiVehicle' | 'Strategy';
 
 const PROTOCOL_NAME: Record<Protocol, string> = { morpho: 'Morpho', aave: 'Aave', railnet: 'Railnet' };
-/** The 1px brand border, and the halo drawn at 20% around a protocol bubble. */
+/** The 1px brand border of a protocol bubble. */
 const PROTOCOL_BORDER: Record<Protocol, string> = { morpho: '#0168E1', aave: '#9391F7', railnet: '#500000' };
-const PROTOCOL_RING: Record<Protocol, string> = { morpho: '#3B82F6', aave: '#8B5CF6', railnet: '#500000' };
 
 const TYPE_LABEL: Record<VaultType, string> = {
   Vault: 'Vault',
@@ -90,32 +101,6 @@ const TYPE_ICON: Record<VaultType, Icon> = {
   Conduit: Layers01Icon,
   MultiVehicle: BoxesIcon,
   Strategy: PackageIcon,
-};
-
-/** Brand colours the logo stand-ins are drawn in. */
-const BRAND: Record<string, string> = {
-  Morpho: '#0168E1',
-  Aave: '#9391F7',
-  Railnet: '#500000',
-  Euler: '#0D1421',
-  Upshift: '#00F29B',
-  Veda: '#7270FF',
-  Ethereum: '#627EEA',
-  Base: '#0052FF',
-  Arbitrum: '#28A0F0',
-  USDC: '#2775CA',
-  USDT: '#26A17B',
-  PYUSD: '#0070E0',
-  WETH: '#627EEA',
-  wstETH: '#00A3FF',
-  weETH: '#5948D9',
-  cbBTC: '#0052FF',
-  WBTC: '#F09242',
-  sUSDe: '#111111',
-  'PT-sUSDe': '#3A3A3A',
-  Steakhouse: '#B4302A',
-  Gauntlet: '#1F2937',
-  CoinShares: '#E3672A',
 };
 
 const fmtUsd = (n: number) =>
@@ -312,79 +297,6 @@ const DOTS: CSSProperties = {
   backgroundImage: 'radial-gradient(circle, var(--gray-100) 1px, transparent 1.5px)',
   backgroundSize: '17px 17px',
 };
-
-// ── Logos (logos.tsx) ────────────────────────────────────────────────────
-
-/**
- * Every logo is the registry Avatar at 20px, as in the app: the image when it loads, else the initial on a
- * muted circle. No images ship here, so a known brand's colour fills the circle in place of its image.
- */
-function Disc({
-  label,
-  color,
-  className,
-  style,
-}: {
-  label: string;
-  color?: string;
-  className?: string;
-  style?: CSSProperties;
-}) {
-  return (
-    <Avatar className={cn('size-5', className)}>
-      <AvatarFallback
-        className={cn('font-semibold text-[10px] group-data-[size=sm]/avatar:text-[10px]', color && 'text-white')}
-        style={color ? { backgroundColor: color } : style}
-      >
-        {label.trim().charAt(0).toUpperCase()}
-      </AvatarFallback>
-    </Avatar>
-  );
-}
-
-function TokenLogo({ symbol, className }: { symbol: string; className?: string }) {
-  return <Disc label={symbol} color={BRAND[symbol]} className={className} />;
-}
-
-function ChainLogo({ label, className }: { label: string; className?: string }) {
-  return <Disc label={label} color={BRAND[label]} className={className} />;
-}
-
-function ProtocolLogo({ protocol, className }: { protocol: string; className?: string }) {
-  return <Disc label={protocol} color={BRAND[protocol]} className={className} />;
-}
-
-function hashHue(s: string) {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360;
-  return h;
-}
-
-/** A known curator's mark, else a soft initials chip whose hue is hashed from the name. */
-function CuratorAvatar({ name, className }: { name: string; className?: string }) {
-  if (BRAND[name]) return <Disc label={name} color={BRAND[name]} className={className} />;
-  const hue = hashHue(name);
-  return (
-    <Disc
-      label={name}
-      className={className}
-      style={{ backgroundColor: `hsl(${hue} 85% 90%)`, color: `hsl(${hue} 55% 32%)` }}
-    />
-  );
-}
-
-/** The venues a cord runs through, overlapped in its tag. */
-function VenueMarks({ venues }: { venues: string[] }) {
-  return (
-    <span className="inline-flex shrink-0 items-center">
-      {venues.map((v, i) => (
-        <span key={v} className={i > 0 ? '-ml-1 inline-flex rounded-full ring-1 ring-background' : 'inline-flex'}>
-          <ProtocolLogo protocol={v} className="size-3 text-[7px]" />
-        </span>
-      ))}
-    </span>
-  );
-}
 
 // ── Filters (filter-bar.tsx, filter-strip.tsx, filter-toolbar.tsx) ─────
 
@@ -824,7 +736,7 @@ function Cord({
         <foreignObject x={mid.x - 60} y={mid.y - 18} width={120} height={36} style={{ overflow: 'visible' }}>
           <div className="flex h-full w-full items-center justify-center">
             <Badge variant="outline" className="max-w-[118px] bg-background" title={label}>
-              {venues && <VenueMarks venues={venues} />}
+              {venues && <LogoStack items={protocolLogoItems(venues)} />}
               <span className="truncate">{label}</span>
             </Badge>
           </div>
@@ -833,13 +745,6 @@ function Cord({
     </g>
   );
 }
-
-/** Where a bubble's risk count sits: on its rim, at the bottom-right (45°), pulled 9px in. */
-const RISK_BADGE_STYLE: CSSProperties = {
-  left: '85.36%',
-  top: '85.36%',
-  transform: 'translate(-50%, -50%) translate(-9px, -9px)',
-};
 
 /** The protocol and chain chips every vault card carries under its name. */
 function ProvenanceChips({ protocol, chain }: { protocol?: Protocol; chain?: string }) {
@@ -1024,17 +929,7 @@ function AllocationBubble({
             apy={apy}
           />
         </div>
-        {risk && risk.count > 0 && (
-          <Badge
-            variant="outline"
-            className="pointer-events-none absolute z-10 bg-background shadow-sm"
-            style={RISK_BADGE_STYLE}
-            title={risk.label}
-          >
-            <HugeiconsIcon icon={Flag02Icon} className="text-destructive" />
-            {risk.count}
-          </Badge>
-        )}
+        {risk && <RiskCountBadge count={risk.count} label={risk.label} />}
       </div>
     </Hit>
   );
@@ -1115,44 +1010,9 @@ function CuratorBubble({
             </>
           )}
         </div>
-        {risk && risk.count > 0 && (
-          <Badge
-            variant="outline"
-            className="pointer-events-none absolute z-10 bg-background shadow-sm"
-            style={RISK_BADGE_STYLE}
-            title={risk.label}
-          >
-            <HugeiconsIcon icon={Flag02Icon} className="text-destructive" />
-            {risk.count}
-          </Badge>
-        )}
+        {risk && <RiskCountBadge count={risk.count} label={risk.label} />}
       </div>
     </Hit>
-  );
-}
-
-/** A protocol at the top of the old drill-down: its mark, name, vault count and total TVL. */
-function ProtocolBubble({ protocol, vaultCount, tvl }: { protocol: Protocol; vaultCount: number; tvl: number }) {
-  return (
-    <div
-      className="flex size-[200px] shrink-0 flex-col items-center justify-center rounded-full bg-background"
-      style={{
-        boxShadow: `0 0 0 1px ${PROTOCOL_BORDER[protocol]}, 0 0 0 4px ${PROTOCOL_RING[protocol]}33, 0 4px 24px rgba(32,33,36,0.08)`,
-      }}
-    >
-      <ProtocolLogo protocol={PROTOCOL_NAME[protocol]} className="size-7 text-sm" />
-      <div className="mt-2 font-medium text-base text-foreground">{PROTOCOL_NAME[protocol]}</div>
-      <div className="mt-3 flex flex-col items-center gap-1.5">
-        <Badge variant="outline" className="bg-background">
-          <HugeiconsIcon icon={HourglassIcon} className="size-3" />
-          {vaultCount} Vaults
-        </Badge>
-        <Badge variant="outline" className="bg-background">
-          <HugeiconsIcon icon={LockIcon} className="size-3" />
-          {fmtUsd(tvl)} total TVL
-        </Badge>
-      </div>
-    </div>
   );
 }
 
@@ -1351,10 +1211,10 @@ function MapControls({
   );
 }
 
-/** A keyboard key inside a tooltip, drawn as the glyph itself, muted to read on a light tooltip. */
+/** A keyboard key inside a tooltip, drawn as the glyph itself: the registry Kbd as is. */
 function ShortcutKey({ icon }: { icon: Icon }) {
   return (
-    <Kbd className="bg-muted! text-muted-foreground!">
+    <Kbd>
       <HugeiconsIcon icon={icon} />
     </Kbd>
   );
@@ -1486,27 +1346,6 @@ function ActionSwap({ activeKey, panes }: { activeKey: string; panes: { key: str
   );
 }
 
-/** The floating card the actions sit in, bottom-centre of the view that owns it; rises in when open. */
-function FloatingActionBar({ open, children }: { open: boolean; children: ReactNode }) {
-  return (
-    <div
-      className={cn(
-        'pointer-events-none absolute inset-x-0 bottom-4 z-20 flex justify-center transition-all duration-200 ease-out',
-        open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0',
-      )}
-    >
-      <div
-        className={cn(
-          'flex max-w-[calc(100%-2rem)] items-center gap-2 overflow-hidden rounded-md border border-border bg-background p-2 shadow-[0_4px_24px_rgba(32,33,36,0.12)]',
-          open && 'pointer-events-auto',
-        )}
-      >
-        {children}
-      </div>
-    </div>
-  );
-}
-
 function SelectedCount({ count }: { count: number }) {
   return (
     <span className="px-1 text-sm tabular-nums">
@@ -1606,18 +1445,12 @@ function VaultBubble({
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}
     >
-      {showRisk && bubble.flagged > 0 && (
-        <span
-          className="pointer-events-none absolute z-10 flex items-center gap-1 rounded-full border border-border bg-background px-2 py-0.5 font-medium text-[12px] text-foreground leading-none shadow-sm"
-          style={{
-            left: '85.36%',
-            top: '85.36%',
-            transform: `translate(-50%, -50%) translate(${-9 * scale}px, ${-9 * scale}px) scale(${scale})`,
-          }}
-        >
-          <HugeiconsIcon icon={Flag02Icon} className="size-3.5 shrink-0 text-destructive" />
-          {bubble.flagged}
-        </span>
+      {showRisk && (
+        <RiskCountBadge
+          count={bubble.flagged}
+          label={`${bubble.flagged} flagged risk ${bubble.flagged === 1 ? 'check' : 'checks'}`}
+          scale={scale}
+        />
       )}
       <div
         className="relative h-full w-full overflow-hidden rounded-full bg-background transition-[box-shadow,border-color] duration-150"
@@ -2016,13 +1849,11 @@ function GroupedBubbleGraph() {
       />
       <StepArrow dir={-1} disabled={index <= 0} onClick={() => step(-1)} />
       <StepArrow dir={1} disabled={index >= FOCUS_VAULTS.length - 1} onClick={() => step(1)} />
-      <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
-        <div className="pointer-events-auto flex max-w-[calc(100%-2rem)] items-center overflow-hidden rounded-md border border-border bg-background shadow-[0_4px_24px_rgba(32,33,36,0.12)]">
-          <VaultStepperBar index={index} total={FOCUS_VAULTS.length}>
-            <VaultActions />
-          </VaultStepperBar>
-        </div>
-      </div>
+      <FloatingActionBar open raised={false} padded={false}>
+        <VaultStepperBar index={index} total={FOCUS_VAULTS.length}>
+          <VaultActions />
+        </VaultStepperBar>
+      </FloatingActionBar>
       <p className="pointer-events-none absolute top-4 right-4 text-muted-foreground text-xs">
         Click a market or vault to walk the trail
       </p>
@@ -2040,9 +1871,8 @@ function AllocationBubbleKinds() {
     chain?: string;
     apy?: number;
     vaultType?: VaultType;
-    risk?: number;
   }[] = [
-    { label: 'cbBTC/USDC', kind: 'Market', tvl: 170.1e6, protocol: 'morpho', apy: 0.071, risk: 2 },
+    { label: 'cbBTC/USDC', kind: 'Market', tvl: 170.1e6, protocol: 'morpho', apy: 0.071 },
     { label: 'wstETH', kind: 'Asset', tvl: 93.3e6 },
     {
       label: 'CoinShares DeFi Income',
@@ -2065,7 +1895,6 @@ function AllocationBubbleKinds() {
             x={[90, 255, 450, 640][i] ?? 0}
             y={115}
             highlighted={picked === it.kind}
-            risk={it.risk ? { count: it.risk, label: 'Flagged' } : undefined}
             onClick={() => setPicked(it.kind)}
           />
         ))}
@@ -2109,73 +1938,6 @@ function CuratorBubbleModes() {
 }
 
 // ── Table (vault-table.tsx, risk-breakdown.tsx) ──────────────────────────
-
-/** ✓ Strengths / 🚩 To review, in the same words on the table's hover and the map's panel. */
-function RiskBreakdown({ checks }: { checks: RiskCheck[] }) {
-  const strengths = checks.filter((c) => c.level === 'low');
-  const toReview = checks.filter((c) => c.level !== 'low');
-  return (
-    <div className="space-y-3">
-      {strengths.length > 0 && <RiskGroup title="Strengths" checks={strengths} level="low" />}
-      {toReview.length > 0 && <RiskGroup title="To review" checks={toReview} level="high" />}
-    </div>
-  );
-}
-
-function RiskGroup({ title, checks, level }: { title: string; checks: RiskCheck[]; level: RiskLevel }) {
-  return (
-    <div>
-      <div
-        className={cn(
-          'mb-1.5 flex items-center gap-1.5 font-medium text-sm',
-          level === 'low' ? 'text-mint' : 'text-destructive',
-        )}
-      >
-        <LevelGlyph level={level} className="size-4" />
-        {title}
-      </div>
-      <ul className="space-y-2">
-        {checks.map((c) => (
-          <li key={c.label}>
-            <div className="font-medium text-foreground text-sm">{c.label}</div>
-            <div className="text-muted-foreground text-xs">{c.detail}</div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function RiskFactorsCell({ row }: { row: ExploreRow }) {
-  const ok = row.checks.filter((c) => c.level === 'low').length;
-  const flagged = row.checks.length - ok;
-  if (row.checks.length === 0) return <span className="text-muted-foreground">—</span>;
-  return (
-    <HoverCard>
-      <HoverCardTrigger
-        delay={80}
-        closeDelay={40}
-        render={<span className="inline-flex cursor-default items-center gap-3 text-foreground" />}
-      >
-        {ok > 0 && (
-          <span className="flex items-center gap-1">
-            <HugeiconsIcon icon={Tick02Icon} className="size-4 text-mint" />
-            {ok}
-          </span>
-        )}
-        {flagged > 0 && (
-          <span className="flex items-center gap-1">
-            <HugeiconsIcon icon={Flag02Icon} className="size-4 text-destructive" />
-            {flagged}
-          </span>
-        )}
-      </HoverCardTrigger>
-      <HoverCardContent align="end" className="max-h-(--available-height) w-80 overflow-y-auto">
-        <RiskBreakdown checks={row.checks} />
-      </HoverCardContent>
-    </HoverCard>
-  );
-}
 
 function ProtocolMarks({ labels }: { labels: string[] }) {
   return (
@@ -2247,23 +2009,6 @@ function ApyCell({ apy, window }: { apy: number | null; window: string }) {
   );
 }
 
-/** The rope that ties a child row to the row above it, stopping at the last child. */
-function TreeElbow({ isLast }: { isLast: boolean }) {
-  return (
-    <span aria-hidden className="pointer-events-none absolute inset-y-0 left-6 w-3 text-muted-foreground/25">
-      <span className={cn('absolute top-0 left-0 w-px bg-current', isLast ? 'h-[calc(50%-10px)]' : 'bottom-0')} />
-      <svg
-        className="absolute top-[calc(50%-10px)] left-0 h-[10px] w-3 overflow-visible"
-        viewBox="0 0 12 10"
-        fill="none"
-        preserveAspectRatio="none"
-      >
-        <path d="M0.5 0 C0.5 6.5 3 9.5 12 9.5" stroke="currentColor" strokeWidth="1" />
-      </svg>
-    </span>
-  );
-}
-
 /** A child row (a Conduit under its MultiVehicle, or the MultiVehicle under a Conduit), in the parent's columns. */
 function ChildRow({
   name,
@@ -2287,7 +2032,7 @@ function ChildRow({
   return (
     <TableRow className="border-0 bg-muted/30 text-foreground hover:bg-muted/50">
       <TableCell className="relative pl-12 font-medium" title={name}>
-        <TreeElbow isLast={isLast} />
+        <TreeElbow isLast={isLast} left={24} />
         <span className="block truncate">{name}</span>
       </TableCell>
       <TableCell>
@@ -2407,7 +2152,7 @@ function VaultTable() {
                           }
                           onCheckedChange={() => setSelected((s) => toggle(s, r.id))}
                           aria-label={`Select ${r.name}`}
-                          className="absolute left-0 -translate-x-1.5 opacity-0 transition-[opacity,transform] duration-150 ease-out focus-visible:translate-x-0 focus-visible:opacity-100 group-hover:translate-x-0 group-hover:opacity-100 data-checked:translate-x-0 data-unchecked:bg-background data-checked:opacity-100"
+                          className="absolute left-0 -translate-x-1.5 opacity-0 transition-[opacity,transform] duration-150 ease-out focus-visible:translate-x-0 focus-visible:opacity-100 group-hover:translate-x-0 group-hover:opacity-100 data-checked:translate-x-0 data-checked:opacity-100"
                         />
                         {expandable && (
                           <Button
@@ -2459,7 +2204,7 @@ function VaultTable() {
                     </TableCell>
                     {showRisk && (
                       <TableCell>
-                        <RiskFactorsCell row={r} />
+                        <RiskFactorsCell {...riskCounts(r.checks)} checks={r.checks} scrollable />
                       </TableCell>
                     )}
                   </TableRow>
@@ -2574,19 +2319,16 @@ function CompareCard({
           <h3 className="truncate font-sans font-semibold text-base text-foreground" title={row.name}>
             {row.name}
           </h3>
-          <div className="mt-2 flex items-center -space-x-1.5">
-            {[
-              <TokenLogo key="t" symbol={row.asset} />,
-              <ProtocolLogo key="p" protocol={PROTOCOL_NAME[row.protocol]} />,
-              row.curator ? <CuratorAvatar key="c" name={row.curator} /> : null,
-              <ChainLogo key="n" label={row.chain} />,
-            ].map((node) =>
-              node ? (
-                <span key={node.key} className="inline-flex rounded-full ring-2 ring-background">
-                  {node}
-                </span>
-              ) : null,
-            )}
+          <div className="mt-2 flex items-center">
+            <LogoStack
+              size="md"
+              items={[
+                { key: 'asset', logo: <TokenLogo symbol={row.asset} /> },
+                { key: 'protocol', logo: <ProtocolLogo protocol={PROTOCOL_NAME[row.protocol]} /> },
+                ...(row.curator ? [{ key: 'curator', logo: <CuratorAvatar name={row.curator} /> }] : []),
+                { key: 'chain', logo: <ChainLogo label={row.chain} /> },
+              ]}
+            />
           </div>
         </div>
         <Button variant="ghost" size="icon-sm" aria-label="See vault & risk details" title="See vault & risk details">
@@ -2631,16 +2373,7 @@ function CompareCard({
           {shown.map((h, i) => (
             <li key={h.label} className="flex min-w-0 items-center gap-2 text-sm">
               <span className={cn('size-2.5 shrink-0 rounded-[3px]', BAR_TINTS[i])} aria-hidden />
-              <span className="flex shrink-0 items-center -space-x-1">
-                {h.collaterals[0] && (
-                  <span className="inline-flex rounded-full ring-2 ring-background">
-                    <TokenLogo symbol={h.collaterals[0]} />
-                  </span>
-                )}
-                <span className="inline-flex rounded-full ring-2 ring-background">
-                  <TokenLogo symbol={row.asset} />
-                </span>
-              </span>
+              <LogoStack items={tokenLogoItems([...h.collaterals.slice(0, 1), row.asset])} size="md" />
               <span className="truncate text-foreground">{h.label}</span>
               <span className="ml-auto shrink-0 text-foreground tabular-nums">{h.pct.toFixed(2)}%</span>
             </li>
@@ -2741,7 +2474,7 @@ function VaultCompareDialog({
 function VaultCompareCard() {
   const targets = [rowById('steakhouse-usdc'), rowById('gauntlet-weth')];
   return (
-    <div className="flex max-h-[640px] flex-col overflow-hidden border border-border bg-background shadow-sm">
+    <div className="flex max-h-[640px] flex-col overflow-hidden rounded-md border border-border bg-background shadow-sm">
       <div className="shrink-0 border-border border-b px-6 py-4 font-semibold text-base">{compareTitle(targets)}</div>
       <CompareBody targets={targets} />
     </div>
@@ -2769,13 +2502,7 @@ export function RiskExplore() {
       </div>
       <div className="grid items-start gap-4 md:grid-cols-2">
         <AllocationBubbleKinds />
-        <div className="space-y-4">
-          <CuratorBubbleModes />
-          <div className="flex gap-4 overflow-x-auto p-2">
-            <ProtocolBubble protocol="morpho" vaultCount={471} tvl={8.4e9} />
-            <ProtocolBubble protocol="aave" vaultCount={212} tvl={21.2e9} />
-          </div>
-        </div>
+        <CuratorBubbleModes />
       </div>
       <VaultCompareCard />
     </>
