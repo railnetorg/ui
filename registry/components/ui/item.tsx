@@ -33,9 +33,9 @@ const itemVariants = cva(
         muted: 'border-transparent bg-muted/50',
       },
       size: {
-        default: 'gap-3.5 px-4 py-3.5',
-        sm: 'gap-3.5 px-3.5 py-3',
-        xs: 'gap-2.5 px-3 py-2.5 in-data-[slot=dropdown-menu-content]:p-0',
+        default: 'gap-2.5 px-3 py-2.5',
+        sm: 'gap-2.5 px-3 py-2.5',
+        xs: 'gap-2 px-2.5 py-2 in-data-[slot=dropdown-menu-content]:p-0',
       },
     },
     defaultVariants: {
@@ -106,7 +106,7 @@ function ItemContent({ className, ...props }: React.ComponentProps<'div'>) {
     <div
       data-slot="item-content"
       className={cn(
-        'flex flex-1 flex-col gap-1 group-data-[size=xs]/item:gap-0.5 [&+[data-slot=item-content]]:flex-none',
+        'flex flex-1 flex-col gap-1 group-data-[size=xs]/item:gap-0 [&+[data-slot=item-content]]:flex-none',
         className,
       )}
       {...props}
@@ -132,7 +132,7 @@ function ItemDescription({ className, ...props }: React.ComponentProps<'p'>) {
     <p
       data-slot="item-description"
       className={cn(
-        'line-clamp-2 text-left font-normal text-muted-foreground text-sm [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4',
+        'line-clamp-2 text-left font-normal text-muted-foreground text-sm leading-normal group-data-[size=xs]/item:text-xs [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4',
         className,
       )}
       {...props}
