@@ -3,7 +3,7 @@ import type * as React from 'react';
 import { cn } from '@/lib/utils';
 
 const alertVariants = cva(
-  "group/alert relative grid w-full gap-0.5 rounded-lg border px-2.5 py-2 text-left text-sm has-data-[slot=alert-action]:relative has-data-[slot=alert-action]:pr-18 has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2 *:[svg]:row-span-2 *:[svg]:translate-y-0.5 *:[svg]:text-current *:[svg:not([class*='size-'])]:size-4",
+  "group/alert relative grid w-full gap-0.5 rounded-lg border px-4 py-3 text-left text-sm has-data-[slot=alert-action]:relative has-data-[slot=alert-action]:pr-18 has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2.5 *:[svg]:row-span-2 *:[svg]:translate-y-0.5 *:[svg]:text-current *:[svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -11,7 +11,7 @@ const alertVariants = cva(
         destructive:
           'bg-card text-destructive *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current',
         warning:
-          'gap-1 rounded-lg border-amber-500/30 bg-amber-500/5 px-3 py-2.5 *:data-[slot=alert-description]:text-xs *:data-[slot=alert-title]:text-amber-700 *:data-[slot=alert-description]:leading-relaxed dark:*:data-[slot=alert-title]:text-amber-400',
+          'gap-1 rounded-md border-amber-500/30 bg-amber-500/5 px-3 py-2.5 *:data-[slot=alert-description]:text-xs *:data-[slot=alert-title]:text-amber-700 *:data-[slot=alert-description]:leading-relaxed dark:*:data-[slot=alert-title]:text-amber-400',
       },
     },
     defaultVariants: {
@@ -51,7 +51,7 @@ function AlertDescription({ className, ...props }: React.ComponentProps<'div'>) 
 }
 
 function AlertAction({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div data-slot="alert-action" className={cn('absolute top-2 right-2', className)} {...props} />;
+  return <div data-slot="alert-action" className={cn('absolute top-2.5 right-3', className)} {...props} />;
 }
 
 export { Alert, AlertAction, AlertDescription, AlertTitle };
