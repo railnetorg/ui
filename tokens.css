@@ -12,6 +12,7 @@
   --accent-foreground: #202124;
   --destructive: #cc3f00;
   --destructive-foreground: #ffffff;
+  --success: #16a34a;
   --primary-hover: #6b0000;
   --secondary-hover: #3a3a3a;
   --destructive-hover: #a33200;
@@ -84,6 +85,7 @@
   --accent-foreground: #e8e9ec;
   --destructive: #cc3f00;
   --destructive-foreground: #ffffff;
+  --success: #22c55e;
   --primary-hover: #d0d0d0;
   --secondary-hover: #232428;
   --destructive-hover: #e04800;

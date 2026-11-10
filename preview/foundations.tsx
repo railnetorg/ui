@@ -8,6 +8,7 @@ const SEMANTIC_COLORS = [
   'muted',
   'accent',
   'destructive',
+  'success',
   'border',
 ];
 const BRAND_COLORS = [
