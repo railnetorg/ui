@@ -27,14 +27,26 @@ bunx shadcn@latest add railnetorg/ui/button#v0.4.0 railnetorg/ui/dialog#v0.4.0
 
 Components follow shadcn's `base-vega` style, except:
 
-- **Badge**: adds `brand`, `success` and `error` variants.
+- **Badge**: adds `brand`, `success` (the `--success` green) and `error` variants.
 - **Alert**: adds an amber variant.
-- **Card**: a `border` in the brand's border color instead of Vega's grey ring.
+- **Card**: a `border` in the brand's border color instead of Vega's grey ring; it clips with `overflow-clip`, so a sticky table header inside it still sticks.
 - **Combobox**: the item renders its own row, with Vega's classes on it.
 - **Drawer**: built on vaul instead of Base UI's drawer; corners follow Vega.
-- **Table**: cells keep `px-3 py-3.5` instead of Vega's `p-2`, for dense data tables.
+- **Table**: Railnet's own table, below.
 
 Anything else that differs from `base-vega` is a bug.
+
+## Table
+
+Every table in every app looks the same because the component draws all of it. Never wrap a table in a frame, never give its header a background or a sticky position, never restyle its text: if a table needs something the component doesn't do, add it here.
+
+- **`<Table>`** draws its frame (border, `rounded-xl`, card background). `frame={false}` drops it for a table already inside a card. Wider than the screen, it scrolls sideways under 768px; `scroll` makes it scroll at every width.
+- **Header**: white, grey titles at 14px, the only weight change in the table, sticky to the top of the page. Set `--table-sticky-top` on a parent when a bar is fixed above it.
+- **Cells**: 14px, regular, black, left-aligned, figures included. `<TableCell numeric>` gives figures equal-width digits. A line under a value is 12px. Addresses are plain text.
+- **Logos and icons** in a cell are an `Avatar`, drawn at 20px; an icon goes inside one.
+- **`<TableRow nested>`** (or `nested={2}`) is a row under the one above it; put `<TableTreeLine last? depth? parentContinues? />` in its first cell to tie it to its parent. The last nested row closes the group with a line.
+- **`<TableFooter>`** holds a total row. **`<TableEmpty colSpan>`** and **`<TableLoading columns rows?>`** cover a table with nothing to show yet.
+- **`<TablePagination page pageCount onPageChange>`** sits under the table, with an optional count as its child. Pass `previousLabel`, `nextLabel` and `label` in the app's language.
 
 ## Contributing
 

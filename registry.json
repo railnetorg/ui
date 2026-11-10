@@ -884,7 +884,7 @@
       "name": "table",
       "type": "registry:ui",
       "dependencies": [],
-      "registryDependencies": ["utils"],
+      "registryDependencies": ["railnetorg/ui/button", "railnetorg/ui/skeleton", "utils"],
       "files": [
         {
           "path": "registry/components/ui/table.tsx",
