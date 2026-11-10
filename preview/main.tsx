@@ -30,7 +30,9 @@ function Header({ dark, onToggleDark }: HeaderProps) {
         <p className="text-muted-foreground text-xs">{VERSION}</p>
       </div>
       <div className="flex items-center gap-2">
-        <code className="hidden rounded-md bg-muted px-2 py-1.5 text-muted-foreground text-xs md:block">{INSTALL_COMMAND}</code>
+        <code className="hidden rounded-md bg-muted px-2 py-1.5 text-muted-foreground text-xs md:block">
+          {INSTALL_COMMAND}
+        </code>
         <Button variant="outline" onClick={copyInstallCommand}>
           <HugeiconsIcon icon={copied ? Tick02Icon : Copy01Icon} />
           {copied ? (
