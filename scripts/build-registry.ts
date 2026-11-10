@@ -115,8 +115,11 @@ for (const [name, value] of Object.entries(light)) {
     theme[`color-${name}`] = `var(--${name})`;
   }
 }
-theme.radius = rootVars.radius as string;
-for (const size of ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl']) theme[`radius-${size}`] = '0';
+// shadcn's scale: every size is a multiple of --radius, so one token sets them all.
+const RADIUS_SCALE = { sm: 0.6, md: 0.8, lg: 1, xl: 1.4, '2xl': 1.8, '3xl': 2.2, '4xl': 2.6 };
+for (const [size, factor] of Object.entries(RADIUS_SCALE)) {
+  theme[`radius-${size}`] = factor === 1 ? 'var(--radius)' : `calc(var(--radius) * ${factor})`;
+}
 
 // Consumers install a component's dependencies at the range this repo builds and types against, not at latest.
 const { devDependencies: testedVersions } = await Bun.file('package.json').json();
