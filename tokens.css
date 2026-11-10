@@ -17,7 +17,7 @@
   --secondary-hover: var(--gray-500);
   --destructive-hover: #a33200;
   --border: var(--gray-75);
-  --input: #f7f7f7;
+  --input: var(--gray-75);
   --ring: var(--deep-red);
   --card: #ffffff;
   --card-foreground: var(--soft-black);
