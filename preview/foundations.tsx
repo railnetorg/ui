@@ -27,7 +27,7 @@ const BRAND_COLORS = [
   'glacier',
   'aqua',
 ];
-const GRAY_COLORS = ['gray-25', 'gray-50', 'gray-100', 'gray-200', 'gray-300', 'gray-400', 'gray-500'];
+const GRAY_COLORS = ['gray-25', 'gray-50', 'gray-75', 'gray-100', 'gray-200', 'gray-300', 'gray-400', 'gray-500'];
 const PRIMARY_SCALE = [
   'primary-25',
   'primary-50',

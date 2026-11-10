@@ -16,7 +16,7 @@
   --primary-hover: #6b0000;
   --secondary-hover: #3a3a3a;
   --destructive-hover: #a33200;
-  --border: #f0f0f0;
+  --border: var(--gray-75);
   --input: #f7f7f7;
   --ring: #500000;
   --card: #ffffff;
@@ -54,6 +54,7 @@
   --aqua: #a8dadc;
   --gray-25: #f9fafb;
   --gray-50: #f0f0f0;
+  --gray-75: #e6e6e6;
   --gray-100: #dadada;
   --gray-200: #a7a8a8;
   --gray-300: #787878;
