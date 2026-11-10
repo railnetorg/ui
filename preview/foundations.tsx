@@ -121,7 +121,7 @@ export function Foundations() {
             <div className="size-12 rounded-lg border bg-muted" />
             <div className="size-12 rounded-full border bg-muted" />
             <p className="text-muted-foreground text-xs">
-              shadcn's radius scale from --radius (0.625rem); avatars and status dots stay round. Base Maia · Hugeicons.
+              shadcn's radius scale from --radius (0.625rem); avatars and status dots stay round. Base Vega · Hugeicons.
             </p>
           </CardContent>
         </Card>

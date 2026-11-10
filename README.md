@@ -1,6 +1,6 @@
 # Railnet UI
 
-Railnet brand tokens and a [shadcn registry](https://ui.shadcn.com/docs/registry) of `base-maia` components (Base UI). Tokens are shared; a component you add is yours to change. Preview: https://external.railnet.app/ui/
+Railnet brand tokens and a [shadcn registry](https://ui.shadcn.com/docs/registry) of `base-vega` components (Base UI). Tokens are shared; a component you add is yours to change. Preview: https://external.railnet.app/ui/
 
 ## Install
 
@@ -22,6 +22,19 @@ bunx shadcn@latest add railnetorg/ui/button#v0.4.0 railnetorg/ui/dialog#v0.4.0
 **Update.** Re-run `add` with the new tag and `--diff`. Copied components never change on their own.
 
 **Releases.** Semver: patch changes a value, minor adds, major renames or removes.
+
+## Changes to Vega
+
+Components follow shadcn's `base-vega` style, except:
+
+- **Badge**: adds `brand`, `success` and `error` variants.
+- **Alert**: adds an amber variant.
+- **Card**: a `border` in the brand's border color instead of Vega's grey ring.
+- **Combobox**: the item renders its own row, with Vega's classes on it.
+- **Drawer**: built on vaul instead of Base UI's drawer; corners follow Vega.
+- **Table**: cells keep `px-3 py-3.5` instead of Vega's `p-2`, for dense data tables.
+
+Anything else that differs from `base-vega` is a bug.
 
 ## Contributing
 
