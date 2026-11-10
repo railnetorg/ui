@@ -560,6 +560,27 @@
       ]
     },
     {
+      "name": "filter",
+      "type": "registry:ui",
+      "dependencies": [],
+      "registryDependencies": [
+        "railnetorg/ui/button",
+        "railnetorg/ui/checkbox",
+        "railnetorg/ui/command",
+        "railnetorg/ui/dropdown-menu",
+        "railnetorg/ui/input-group",
+        "railnetorg/ui/popover",
+        "railnetorg/ui/slider",
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "registry/components/ui/filter.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "hover-card",
       "type": "registry:ui",
       "dependencies": ["@base-ui/react@^1.2.0"],

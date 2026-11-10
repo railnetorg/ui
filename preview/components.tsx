@@ -8,6 +8,7 @@ import {
   Settings02Icon,
 } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
+import { FilterShowcase } from '@preview/filter-showcase';
 import { TableShowcase } from '@preview/table-showcase';
 import type { ReactNode } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -484,6 +485,7 @@ export function Components() {
           </Accordion>
         </Showcase>
       </div>
+      <FilterShowcase />
       <TableShowcase />
     </div>
   );
