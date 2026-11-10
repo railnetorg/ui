@@ -13,6 +13,7 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
   --color-primary-hover: var(--primary-hover);
   --color-secondary-hover: var(--secondary-hover);
   --color-destructive-hover: var(--destructive-hover);
@@ -53,6 +54,7 @@
   --color-aqua: var(--aqua);
   --color-gray-25: var(--gray-25);
   --color-gray-50: var(--gray-50);
+  --color-gray-75: var(--gray-75);
   --color-gray-100: var(--gray-100);
   --color-gray-200: var(--gray-200);
   --color-gray-300: var(--gray-300);
@@ -68,15 +70,13 @@
   --font-serif: "ABC Marist", "Georgia", serif;
   --font-sans: "Inter Tight Variable", "Inter Tight", "Inter", system-ui, sans-serif;
   --font-heading: "ABC Marist", "Georgia", serif;
-  --radius: 0;
-  --radius-xs: 0;
-  --radius-sm: 0;
-  --radius-md: 0;
-  --radius-lg: 0;
-  --radius-xl: 0;
-  --radius-2xl: 0;
-  --radius-3xl: 0;
-  --radius-4xl: 0;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 @layer base {

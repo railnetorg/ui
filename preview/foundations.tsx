@@ -8,6 +8,7 @@ const SEMANTIC_COLORS = [
   'muted',
   'accent',
   'destructive',
+  'success',
   'border',
 ];
 const BRAND_COLORS = [
@@ -26,7 +27,7 @@ const BRAND_COLORS = [
   'glacier',
   'aqua',
 ];
-const GRAY_COLORS = ['gray-25', 'gray-50', 'gray-100', 'gray-200', 'gray-300', 'gray-400', 'gray-500'];
+const GRAY_COLORS = ['gray-25', 'gray-50', 'gray-75', 'gray-100', 'gray-200', 'gray-300', 'gray-400', 'gray-500'];
 const PRIMARY_SCALE = [
   'primary-25',
   'primary-50',
@@ -117,10 +118,10 @@ export function Foundations() {
             <CardTitle>Shape</CardTitle>
           </CardHeader>
           <CardContent className="flex items-center gap-4 text-sm">
-            <div className="size-12 border bg-muted" />
+            <div className="size-12 rounded-lg border bg-muted" />
             <div className="size-12 rounded-full border bg-muted" />
             <p className="text-muted-foreground text-xs">
-              Radius 0 on cards and controls; avatars and status dots stay round. Base Maia · Hugeicons.
+              shadcn's radius scale from --radius (0.625rem); avatars and status dots stay round. Base Vega · Hugeicons.
             </p>
           </CardContent>
         </Card>
