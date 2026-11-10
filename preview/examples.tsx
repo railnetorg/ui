@@ -28,6 +28,7 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, 
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Toggle } from '@/components/ui/toggle';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
@@ -165,10 +166,12 @@ function ExploreToolbar() {
           <InputGroupInput placeholder="Search..." />
         </InputGroup>
         <div className="flex flex-wrap gap-2">
-          <ToggleGroup defaultValue={['30d']}>
-            <ToggleGroupItem value="7d">APY 7D</ToggleGroupItem>
-            <ToggleGroupItem value="30d">APY 30D</ToggleGroupItem>
-          </ToggleGroup>
+          <Tabs defaultValue="30d">
+            <TabsList>
+              <TabsTrigger value="7d">APY 7D</TabsTrigger>
+              <TabsTrigger value="30d">APY 30D</TabsTrigger>
+            </TabsList>
+          </Tabs>
           <Button variant="outline">
             <HugeiconsIcon icon={FilterIcon} data-icon="inline-start" />
             Asset manager
@@ -277,15 +280,17 @@ function ConduitHeaderCard() {
       <CardContent className="space-y-3">
         <div className="flex items-center justify-between gap-4">
           <p className="font-medium text-sm">Performance</p>
-          <ToggleGroup
-            value={[metric]}
+          <Tabs
+            value={metric}
             onValueChange={(value) => {
-              if (value[0] === 'tvl' || value[0] === 'sharePrice') setMetric(value[0]);
+              if (value === 'tvl' || value === 'sharePrice') setMetric(value);
             }}
           >
-            <ToggleGroupItem value="tvl">TVL</ToggleGroupItem>
-            <ToggleGroupItem value="sharePrice">Share price</ToggleGroupItem>
-          </ToggleGroup>
+            <TabsList>
+              <TabsTrigger value="tvl">TVL</TabsTrigger>
+              <TabsTrigger value="sharePrice">Share price</TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
         <ChartContainer config={PERFORMANCE_CHART} className="aspect-auto h-48 w-full">
           <AreaChart data={metric === 'tvl' ? TVL_HISTORY : SHARE_PRICE_HISTORY}>
@@ -388,13 +393,15 @@ function DepositWidget() {
               />
             </AreaChart>
           </ChartContainer>
-          <ToggleGroup size="sm" defaultValue={['5Y']}>
-            {HORIZONS.map((horizon) => (
-              <ToggleGroupItem key={horizon} value={horizon}>
-                {horizon}
-              </ToggleGroupItem>
-            ))}
-          </ToggleGroup>
+          <Tabs defaultValue="5Y">
+            <TabsList>
+              {HORIZONS.map((horizon) => (
+                <TabsTrigger key={horizon} value={horizon}>
+                  {horizon}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">APY 30D</span>
             <span className="font-medium tabular-nums">6.42%</span>

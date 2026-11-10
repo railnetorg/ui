@@ -48,6 +48,19 @@ Every table in every app looks the same because the component draws all of it. N
 - **`<TableFooter>`** holds a total row. **`<TableEmpty colSpan>`** and **`<TableLoading columns rows?>`** cover a table with nothing to show yet.
 - **`<TablePagination page pageCount onPageChange>`** sits under the table, with an optional count as its child. Pass `previousLabel`, `nextLabel` and `label` in the app's language.
 
+## Choosing a switch
+
+- **Another view of the same content** (TVL / Share price, APY 7D / 30D, Bubble / Table, 1Y / 5Y): `Tabs`, its default segmented list.
+- **A setting on or off** (Favorites, Show risk): `Toggle`, or a yes/no filter.
+- **Several options picked together, or a formatting control**: `ToggleGroup`.
+- **More than four or five choices**: `Select`.
+
+Primary red is for the main action of a screen, never for the selected state of a switch.
+
+## Filters
+
+`filter` is the filter bar every list uses: `FilterSearch` and one pill per active filter (`FilterSelect`, `FilterRange`, `FilterPill` for a yes/no) on the left, `FilterClear` and the icon-only `FilterMenu` pinned right, inside `FilterBar`. A pill opens the same `FilterOptionList` as the menu's submenu. `MultiFilterSelect` is superseded by `filter` and will be removed once no app uses it.
+
 ## Contributing
 
 - Brand values live in `tokens.css` only. Run `bun run build:registry` afterwards; CI fails if `registry.json` or `theme.css` are stale.

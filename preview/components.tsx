@@ -106,7 +106,6 @@ import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TablePagination, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 const BUTTON_VARIANTS = ['default', 'secondary', 'outline', 'ghost', 'destructive', 'link'] as const;
@@ -253,10 +252,12 @@ export function Components() {
               <RadioGroupItem value="queued" /> Queued redeem
             </Label>
           </RadioGroup>
-          <ToggleGroup defaultValue={['30d']}>
-            <ToggleGroupItem value="7d">APY 7D</ToggleGroupItem>
-            <ToggleGroupItem value="30d">APY 30D</ToggleGroupItem>
-          </ToggleGroup>
+          <Tabs defaultValue="30d">
+            <TabsList>
+              <TabsTrigger value="7d">APY 7D</TabsTrigger>
+              <TabsTrigger value="30d">APY 30D</TabsTrigger>
+            </TabsList>
+          </Tabs>
           <Slider defaultValue={40} />
         </Showcase>
 
