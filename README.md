@@ -63,6 +63,7 @@ Primary red is for the main action of a screen, never for the selected state of 
 
 ## Contributing
 
+- Design rules, for people and agents: [`DESIGN.md`](DESIGN.md).
 - Brand values live in `tokens.css` only. Run `bun run build:registry` afterwards; CI fails if `registry.json` or `theme.css` are stale.
 - Add a component with `bunx shadcn add <name>`, then `bun run build:registry`.
 - Icons are `<IconPlaceholder>` with the names from shadcn's `base` registry; add new Hugeicons ones to `registry/components/icon-placeholder.tsx`.
