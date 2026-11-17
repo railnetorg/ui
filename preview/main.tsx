@@ -3,6 +3,7 @@ import { HugeiconsIcon } from '@hugeicons/react';
 import { Components } from '@preview/components';
 import { Examples } from '@preview/examples';
 import { Foundations } from '@preview/foundations';
+import { Risk } from '@preview/risk';
 import { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Button } from '@/components/ui/button';
@@ -29,7 +30,9 @@ function Header({ dark, onToggleDark }: HeaderProps) {
         <p className="text-muted-foreground text-xs">{VERSION}</p>
       </div>
       <div className="flex items-center gap-2">
-        <code className="hidden bg-muted px-2 py-1.5 text-muted-foreground text-xs md:block">{INSTALL_COMMAND}</code>
+        <code className="hidden rounded-md bg-muted px-2 py-1.5 text-muted-foreground text-xs md:block">
+          {INSTALL_COMMAND}
+        </code>
         <Button variant="outline" onClick={copyInstallCommand}>
           <HugeiconsIcon icon={copied ? Tick02Icon : Copy01Icon} />
           {copied ? (
@@ -62,11 +65,15 @@ function Preview() {
       <Tabs defaultValue="examples" className="p-4">
         <TabsList>
           <TabsTrigger value="examples">Examples</TabsTrigger>
+          <TabsTrigger value="risk">Risk</TabsTrigger>
           <TabsTrigger value="components">Components</TabsTrigger>
           <TabsTrigger value="foundations">Foundations</TabsTrigger>
         </TabsList>
         <TabsContent value="examples" className="pt-4">
           <Examples />
+        </TabsContent>
+        <TabsContent value="risk" className="pt-4">
+          <Risk />
         </TabsContent>
         <TabsContent value="components" className="pt-4">
           <Components />
