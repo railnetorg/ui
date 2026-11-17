@@ -103,7 +103,7 @@
           "accent-foreground": "var(--soft-black)",
           "destructive": "var(--rust)",
           "destructive-foreground": "#ffffff",
-          "success": "#16a34a",
+          "success": "#137a39",
           "primary-hover": "#6b0000",
           "secondary-hover": "var(--gray-500)",
           "destructive-hover": "#a33200",

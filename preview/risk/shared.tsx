@@ -229,6 +229,7 @@ export function FloatingActionBar({
 }) {
   return (
     <div
+      inert={!open}
       className={cn(
         'pointer-events-none absolute inset-x-0 bottom-4 flex justify-center transition-all duration-200 ease-out',
         raised && 'z-20',

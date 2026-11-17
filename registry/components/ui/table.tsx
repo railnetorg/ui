@@ -58,7 +58,7 @@ function TableRow({ className, nested, ...props }: React.ComponentProps<'tr'> & 
       data-slot="table-row"
       data-nested={depth}
       className={cn(
-        'border-b transition-colors data-[state=selected]:bg-muted',
+        'border-b transition-colors data-[state=selected]:bg-muted [&:has(+tr[data-nested])]:border-b-0',
         depth && 'border-0 bg-muted/30 [&:has(+tr:not([data-nested]))]:border-b [&>td:first-child]:relative',
         depth === 1 && '[&>td:first-child]:pl-10',
         depth === 2 && '[&>td:first-child]:pl-16',

@@ -2113,8 +2113,8 @@ function VaultTable() {
   const full = selected.length >= MAX_COMPARE;
   return (
     <div className="relative pb-16">
-      <Card className="gap-0 overflow-x-auto py-0">
-        <Table className="min-w-[1100px] table-fixed">
+      <Card className="gap-0 py-0">
+        <Table frame={false} scroll className="min-w-[1100px] table-fixed">
           <TableHeader className="[&_th]:bg-background [&_th]:shadow-[inset_0_-1px_0_var(--border)]">
             <TableRow>
               <SortableHead label="Name" sortKey="name" sort={sort} onSort={onSort} className="w-[18%]" />

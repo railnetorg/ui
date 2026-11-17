@@ -58,8 +58,23 @@ function FilterOptionList({
     if (!multiple) return onValueChange(value.includes(option) ? [] : [option]);
     onValueChange(value.includes(option) ? value.filter((v) => v !== option) : [...value, option]);
   };
+  // Arrow keys and Enter only reach the list from inside it: focus the search field, or the list itself when it has
+  // none, as soon as it opens.
+  const ref = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      const root = ref.current;
+      (root?.querySelector<HTMLElement>('[cmdk-input]') ?? root)?.focus();
+    });
+    return () => cancelAnimationFrame(frame);
+  }, []);
   return (
-    <Command data-slot="filter-option-list" className="rounded-none! bg-transparent p-0">
+    <Command
+      ref={ref}
+      tabIndex={searchable ? undefined : -1}
+      data-slot="filter-option-list"
+      className="rounded-none! bg-transparent p-0 outline-none"
+    >
       {searchable && <CommandInput placeholder={searchPlaceholder} />}
       <CommandList className="p-1">
         <CommandEmpty className="py-4 text-muted-foreground">{emptyText}</CommandEmpty>
@@ -68,8 +83,9 @@ function FilterOptionList({
           return (
             <CommandItem
               key={option.value}
-              value={option.label}
-              keywords={[option.value]}
+              value={option.value}
+              keywords={[option.label]}
+              aria-checked={checked}
               data-checked={!multiple && checked}
               onSelect={() => toggle(option.value)}
               className={cn('gap-2.5 py-2', MEDIA, multiple && '[&>svg:last-child]:hidden')}
@@ -219,6 +235,8 @@ function FilterSelect({
 }
 
 type FilterRangeBodyProps = {
+  /** Names the slider for screen readers. */
+  label?: string;
   value: number;
   onValueChange: (value: number) => void;
   max: number;
@@ -230,6 +248,7 @@ type FilterRangeBodyProps = {
 
 /** A floor: "At least X", a slider from 0 to `max`, and a shortcut to the maximum. */
 function FilterRangeBody({
+  label,
   value,
   onValueChange,
   max,
@@ -238,8 +257,14 @@ function FilterRangeBody({
   atLeastLabel = 'At least',
   maxLabel = 'Max',
 }: FilterRangeBodyProps) {
+  const labelId = React.useId();
   return (
     <div data-slot="filter-range" className="flex flex-col gap-3 p-3">
+      {label && (
+        <span id={labelId} className="sr-only">
+          {label}
+        </span>
+      )}
       <div className="flex items-center justify-between gap-2 text-sm">
         <span className="text-muted-foreground">
           {atLeastLabel} <span className="text-foreground tabular-nums">{format(value)}</span>
@@ -255,6 +280,7 @@ function FilterRangeBody({
         </Button>
       </div>
       <Slider
+        aria-labelledby={label ? labelId : undefined}
         value={[value]}
         min={0}
         max={max}
@@ -282,7 +308,7 @@ function FilterRange({ label, clearLabel, ...body }: FilterRangeBodyProps & { la
       }}
       value={<span className="tabular-nums">≥ {format(body.value)}</span>}
     >
-      <FilterRangeBody {...body} />
+      <FilterRangeBody label={label} {...body} />
     </FilterPill>
   );
 }
